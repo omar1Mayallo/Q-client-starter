@@ -1,7 +1,8 @@
-import { Home, NavigateNext } from "@mui/icons-material";
+import { Home, NavigateBefore, NavigateNext } from "@mui/icons-material";
 import { Breadcrumbs, Divider, Link, Stack, Typography } from "@mui/material";
-import React from "react";
+import i18next from "i18next";
 import { Link as RouterLink } from "react-router-dom";
+import { LanguagesE } from "../../../store/language.store";
 
 export interface BreadcrumbItemI {
   name: string;
@@ -17,7 +18,13 @@ const PageBreadcrumbs = ({ breadcrumbs }: PageBreadcrumbsProps) => {
       <Divider orientation="vertical" flexItem />
       <Breadcrumbs
         aria-label="breadcrumb"
-        separator={<NavigateNext fontSize="small" />}
+        separator={
+          i18next.language === LanguagesE.AR ? (
+            <NavigateBefore fontSize="small" />
+          ) : (
+            <NavigateNext fontSize="small" />
+          )
+        }
       >
         {breadcrumbs.map(({ url, name }) =>
           !url ? (
@@ -32,12 +39,12 @@ const PageBreadcrumbs = ({ breadcrumbs }: PageBreadcrumbsProps) => {
             <Link
               key={name}
               component={RouterLink}
-              underline="hover"
+              underline="always"
               color="text.primary"
               to={url}
               className="flex items-center"
             >
-              Users
+              {name}
             </Link>
           ),
         )}

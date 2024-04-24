@@ -1,19 +1,19 @@
 import { MoreVert } from "@mui/icons-material";
 import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
-import IconButtonTooltip from "../../../../../shared/components/Buttons/IconButtonTooltip";
-import useDropDownMenu from "../../../../../shared/hooks/useDropDownMenu";
-import { IActionsConfig } from "../../../../../shared/actions";
+import IconButtonTooltip from "../Buttons/IconButtonTooltip";
+import useDropDownMenu from "../../hooks/useDropDownMenu";
+import { IActionsConfig } from "../../actions";
 
 export interface ActionItems extends IActionsConfig {
   handler: (id: number) => void;
 }
 
-export interface TableActionsProps {
+export interface TableRowActionsProps {
   id: number;
   actionsItems: ActionItems[];
 }
 
-const TableActions = ({ id, actionsItems }: TableActionsProps) => {
+const TableRowActions = ({ id, actionsItems }: TableRowActionsProps) => {
   const { anchorEl, open, handleClick, handleClose } = useDropDownMenu();
 
   return (
@@ -54,4 +54,4 @@ const TableActions = ({ id, actionsItems }: TableActionsProps) => {
   );
 };
 
-export default TableActions;
+export default TableRowActions;

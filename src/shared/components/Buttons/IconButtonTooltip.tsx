@@ -23,27 +23,29 @@ const IconButtonTooltip = ({
 }: IconButtonTooltipProps) => {
   return (
     <Tooltip title={tooltip} arrow>
-      <IconButton
-        disabled={disabled}
-        onClick={onClick}
-        sx={{
-          ...(variant && {
-            color: (theme) =>
-              theme.palette.getContrastText(textVariant || variant),
-            backgroundColor: variant,
-            "&:hover": {
-              backgroundColor: hover,
-            },
-            "&.Mui-disabled": {
-              backgroundColor: (theme) =>
-                theme.palette.action.disabledBackground,
-              color: (theme) => theme.palette.action.disabled,
-            },
-          }),
-        }}
-      >
-        <Icon />
-      </IconButton>
+      <span>
+        <IconButton
+          disabled={disabled}
+          onClick={onClick}
+          sx={{
+            ...(variant && {
+              color: (theme) =>
+                theme.palette.getContrastText(textVariant || variant),
+              backgroundColor: variant,
+              "&:hover": {
+                backgroundColor: hover,
+              },
+              "&.Mui-disabled": {
+                backgroundColor: (theme) =>
+                  theme.palette.action.disabledBackground,
+                color: (theme) => theme.palette.action.disabled,
+              },
+            }),
+          }}
+        >
+          <Icon />
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };

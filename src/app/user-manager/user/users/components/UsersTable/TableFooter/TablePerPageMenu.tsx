@@ -1,22 +1,19 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import useGetAllUsersParamsStore from "../store/useGetAllUsersParams.store";
-import { useLocation, useNavigate } from "react-router-dom";
+import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
+import i18next from "i18next";
 
 const TablePerPageMenu = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { pagination, handleChangeLimit } = useGetAllUsersParamsStore(
-    location,
-    navigate,
-  )();
+  const { pagination, handleChangeLimit } = useGetAllUsersParamsStore();
 
   return (
     <FormControl size="small" sx={{ minWidth: 90 }}>
-      <InputLabel id="demo-simple-select-helper-label">Per Page</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label">
+        {i18next.t("PerPage", { ns: "labels" })}
+      </InputLabel>
       <Select
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
-        label="Per Page"
+        label={i18next.t("PerPage", { ns: "labels" })}
         value={pagination.limit}
         onChange={(e) => {
           handleChangeLimit(+e.target.value);

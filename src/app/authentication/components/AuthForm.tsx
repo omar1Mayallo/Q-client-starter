@@ -1,15 +1,9 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Link,
-  Typography,
-} from "@mui/material";
+import { Avatar, Stack, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { useLangStyle } from "../../../shared/hooks/useStyle";
+
+import LoadingButton from "../../../shared/components/Buttons/LoadingButton";
 
 interface Props {
   isLoading: boolean;
@@ -25,67 +19,35 @@ export default function AuthForm({
   children,
 }: Props) {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <Stack>
       {/* Form_Header */}
-      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        {formHead}
-      </Typography>
+      <Stack alignItems={"center"}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          {formHead}
+        </Typography>
+      </Stack>
 
       {/* Form_Body */}
-      <Box
+      <Stack
         component="form"
         noValidate
         onSubmit={handleSubmit}
-        sx={{ mt: 1, gap: 2 }}
+        sx={{ mt: 2, gap: 3, direction: useLangStyle("rtl", "ltr") }}
       >
         {/* INPUTS */}
         {children}
 
         {/* Submit_Form_Button */}
-        <Button
+        <LoadingButton
           type="submit"
-          variant="contained"
-          sx={{ my: 2 }}
-          fullWidth
-          disabled={isLoading}
-          startIcon={
-            isLoading && <CircularProgress size={15} color="inherit" />
-          }
-        >
-          <span>{isLoading ? "Loading" : formHead}</span>
-        </Button>
-
-        {/* Form_Footer */}
-        {formHead === "Sign In" ? (
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link component={RouterLink} to="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        ) : (
-          <Box sx={{ textAlign: "center" }}>
-            <Link component={RouterLink} to="/login" variant="body2">
-              {"Already have an account? Sign In"}
-            </Link>
-          </Box>
-        )}
-      </Box>
-    </Box>
+          label={formHead}
+          isLoading={isLoading}
+          sx={{ gap: useLangStyle(1, 0) }}
+        />
+      </Stack>
+    </Stack>
   );
 }

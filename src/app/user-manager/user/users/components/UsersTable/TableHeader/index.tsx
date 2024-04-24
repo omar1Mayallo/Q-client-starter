@@ -6,12 +6,12 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import { Key } from "react";
-import { TableHeadCell } from "../../../../../shared/types/Interfaces/TableCellHead.interface";
-import SortIcons from "../../../../../shared/components/Icons/SortIcons";
-import useGetAllUsersParamsStore from "../store/useGetAllUsersParams.store";
-import { useLocation, useNavigate } from "react-router-dom";
-import useUserActions from "../../../../../shared/hooks/useUserActions";
-import { UserModel } from "../../../../../shared/types/models/User.model";
+import SortIcons from "../../../../../../../shared/components/Icons/SortIcons";
+import useUserActions from "../../../../../../../shared/hooks/useUserActions";
+import { TableHeadCell } from "../../../../../../../shared/types/Interfaces/TableCellHead.interface";
+import { UserModel } from "../../../../../../../shared/types/models/User.model";
+import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
+import { useLangStyle } from "../../../../../../../shared/hooks/useStyle";
 
 export interface TableHeaderProps {
   headCells: TableHeadCell<UserModel>[];
@@ -26,11 +26,10 @@ export default function TableHeader({
   rowCount,
   onSelectAllClick,
 }: TableHeaderProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { sort, handleSort } = useGetAllUsersParamsStore(location, navigate)();
+  const { sort, handleSort } = useGetAllUsersParamsStore();
   const { isHaveNotDeleteAction } = useUserActions("users");
 
+  const cellDir = useLangStyle("ltr", "rtl");
   return (
     <MuiTableHead>
       <TableRow>
@@ -51,6 +50,7 @@ export default function TableHeader({
             key={headCell.id as Key}
             align={headCell.numeric ? "center" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
+            dir={cellDir}
           >
             <TableSortLabel
               active={sort.replace(/-/g, "") === headCell.id}

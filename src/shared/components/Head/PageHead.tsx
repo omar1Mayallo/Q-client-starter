@@ -13,9 +13,10 @@ const PageHead = ({ title, children }: PageHeadProps) => {
       <Helmet title={`Template | ${title}`} />
 
       <Stack
-        direction={"row"}
-        alignItems={"center"}
+        direction={{ sm: "column", md: "row" }}
+        alignItems={{ sm: "start", md: "center" }}
         justifyContent={"space-between"}
+        gap={2}
         mb={4}
       >
         <Typography component={"h1"} variant="h5">

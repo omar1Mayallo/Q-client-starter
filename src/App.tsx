@@ -1,7 +1,8 @@
-import { enqueueSnackbar } from "notistack";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./app/authentication/pages/login";
+import useLoginAPIs from "./app/authentication/pages/login/api/login.api";
 import Register from "./app/authentication/pages/register";
 import Plan from "./app/billing-manager/plan";
 import ShortCode from "./app/billing-manager/short-code";
@@ -11,14 +12,16 @@ import Groups from "./app/user-manager/group";
 import useGetUserPermissions from "./app/user-manager/permissions/services/permissions.service";
 import Roles from "./app/user-manager/role";
 import Users from "./app/user-manager/user/users";
+import UserDetails from "./app/user-manager/user/users/components/UserDetails";
 import FullAppLoading from "./shared/components/Loaders/FullAppLoading";
 import ProtectedRoutes from "./shared/components/Routes/ProtectedRoutes";
 import PublicRoutes from "./shared/components/Routes/PublicRoutes";
-import useLoginAPIs from "./app/authentication/pages/login/api/login.api";
+import { toastError } from "./shared/components/Toasts";
 
 function App() {
   const { data: permissions, isLoading, isError } = useGetUserPermissions();
   const { logout } = useLoginAPIs();
+  const { t } = useTranslation();
 
   const firstPermissionsItem =
     permissions?.entities && permissions?.entities[0];
@@ -30,12 +33,7 @@ function App() {
 
   useEffect(() => {
     if (isError) {
-      enqueueSnackbar(
-        "Failed to retrieve user permissions. Please try again later.",
-        {
-          variant: "error",
-        },
-      );
+      toastError(t("USER_PERMISSIONS_ERROR", { ns: "labels" }));
       logout(2000);
     }
   }, [isError]);
@@ -60,7 +58,10 @@ function App() {
             <Route path="/profile" element={<Dashboard />} />
 
             <Route path="/users-management">
-              <Route path="users" element={<Users />} />
+              <Route path="users">
+                <Route index element={<Users />} />
+                <Route path=":id" element={<UserDetails />} />
+              </Route>
               <Route path="roles" element={<Roles />} />
               <Route path="groups" element={<Groups />} />
             </Route>

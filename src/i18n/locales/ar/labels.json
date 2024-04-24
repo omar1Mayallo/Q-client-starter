@@ -1,0 +1,51 @@
+{
+  "username": "اسم المستخدم",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "login_with_otp": "تسجيل الدخول برمز مرة واحدة",
+  "loading": "جار التحميل",
+  "phone": "رقم الهاتف",
+  "roles": "الادوار",
+
+  "id": "الرقم التسلسلي",
+  "name": "الاسم",
+  "status": "الحالة",
+  "type": "النوع",
+  "created_at": "تاريخ الإنشاء",
+  "actions": "الإجراءات",
+
+  "LOGIN_SUCCESS": "تم تسجيل الدخول بنجاح",
+  "LOGOUT_SUCCESS": "تم تسجيل الخروج بنجاح",
+  "VALIDATION_ERROR": "حدث خطأ أثناء التحقق",
+  "SAVED_SUCCESS": "تم الحفظ بنجاح",
+  "DELETED_SUCCESS": "تم الحذف بنجاح",
+  "EDITED_SUCCESS": "تم التعديل بنجاح",
+  "SOMETHING_WENT_WRONG": "حدث خطأ ما",
+  "USER_PERMISSIONS_ERROR": "فشل في استرجاع أذونات المستخدم، يرجى تسجيل الدخول مرة أخرى",
+  "ACCESS_DENIED": "تم رفض الوصول",
+
+  "BACK": "رجوع",
+  "SAVE": "حفظ",
+
+  "USERS": "المستخدمين",
+  "USERS_MANAGEMENT": "إدارة المستخدمين",
+  "signIn": "تسجيل الدخول",
+  "USER_DETAILS": "تفاصيل المستخدم",
+
+  "search": "بحث",
+  "export": "تصدير",
+  "filter": "تصفية",
+  "add": "إضافة",
+  "edit": "تعديل",
+  "changeImg": "تغيير الصورة",
+  "removeImg": "حذف الصورة",
+  "delete": "حذف",
+  "reset": "إعادة تعيين",
+  "deleteSelected": "حذف المحدد",
+
+  "selectedItems": "{{number}} عناصر محددة",
+
+  "loginWithOTP": "تسجيل الدخول برمز مرة واحدة",
+  "PerPage": "لكل صفحة",
+  "Total": "العدد الكلي"
+}

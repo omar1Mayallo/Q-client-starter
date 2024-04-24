@@ -7,29 +7,26 @@ import {
   alpha,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
+import IconButtonTooltip from "../../../../../../../shared/components/Buttons/IconButtonTooltip";
+import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
 import TableFilterMenu from "./TableFilterMenu";
-import IconButtonTooltip from "../../../../../shared/components/Buttons/IconButtonTooltip";
-import useGetAllUsersParamsStore from "../store/useGetAllUsersParams.store";
-import { useLocation, useNavigate } from "react-router-dom";
+import i18next from "i18next";
 
-interface TableSearchProps {
-  numSelected: number;
+interface TableSearchFiltersProps {
+  selected: number[];
 }
 
-export default function TableSearch({ numSelected }: TableSearchProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { search, handleSearch } = useGetAllUsersParamsStore(
-    location,
-    navigate,
-  )();
+export default function TableSearchFilters({
+  selected,
+}: TableSearchFiltersProps) {
+  const { search, handleSearch } = useGetAllUsersParamsStore();
 
   return (
     <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
+        ...(selected.length > 0 && {
           bgcolor: (theme) =>
             alpha(
               theme.palette.primary.main,
@@ -38,14 +35,17 @@ export default function TableSearch({ numSelected }: TableSearchProps) {
         }),
       }}
     >
-      {numSelected > 0 ? (
+      {selected.length > 0 ? (
         <Typography
           sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {i18next.t("selectedItems", {
+            ns: "labels",
+            number: selected.length,
+          })}
         </Typography>
       ) : (
         <TextField
@@ -66,18 +66,22 @@ export default function TableSearch({ numSelected }: TableSearchProps) {
               },
             },
           }}
-          placeholder="Search..."
+          placeholder={i18next.t("search", {
+            ns: "labels",
+          })}
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
         />
       )}
-      {numSelected > 0 ? (
+      {selected.length > 0 ? (
         <IconButtonTooltip
-          tooltip="Delete Selected"
+          tooltip={i18next.t("deleteSelected", {
+            ns: "labels",
+          })}
           variant={red[500]}
           hover={red[700]}
           Icon={Delete}
-          onClick={() => console.log("Delete Selected")}
+          onClick={() => undefined}
         />
       ) : (
         <TableFilterMenu />

@@ -3,7 +3,7 @@ import React from "react";
 export default function useSelectRows<
   T extends { id: number; [key: string]: any },
 >(data: T[]) {
-  const [selected, setSelected] = React.useState<readonly number[]>([]);
+  const [selected, setSelected] = React.useState<number[]>([]);
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelected = data.map((n) => n.id)!;
@@ -15,7 +15,7 @@ export default function useSelectRows<
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
   const handleClick = (id: number) => {
     const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
+    let newSelected: number[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);

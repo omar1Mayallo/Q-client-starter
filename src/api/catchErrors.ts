@@ -1,10 +1,11 @@
 import { AxiosError } from "axios";
-import { enqueueSnackbar } from "notistack";
+import i18next from "i18next";
 import { FieldValues, Path, UseFormSetError } from "react-hook-form";
+import { toastError } from "../shared/components/Toasts";
 import { ResponseErrorsI } from "./types/response.types";
 
 export default function catchErrors<DataT extends FieldValues>(
-  error: AxiosError<ResponseErrorsI<keyof DataT>>,
+  error: AxiosError<ResponseErrorsI<string>>,
   setError: UseFormSetError<DataT>,
 ) {
   // console.log(error);
@@ -12,12 +13,12 @@ export default function catchErrors<DataT extends FieldValues>(
 
   // HTTP(Nest)_ERRORS, DATABASE_ERRORS
   if (resErrors?.message) {
-    enqueueSnackbar(resErrors?.message, { variant: "error" });
+    toastError(resErrors.message);
   }
 
   // SERVER_VALIDATION_ERRORS
   else if (resErrors?.errors) {
-    enqueueSnackbar("Validation Errors", { variant: "error" });
+    toastError(i18next.t("VALIDATION_ERROR", { ns: "labels" }));
     resErrors?.errors.forEach(({ field, message }) => {
       setError(field as Path<DataT>, { message }, { shouldFocus: true });
     });
@@ -25,6 +26,6 @@ export default function catchErrors<DataT extends FieldValues>(
 
   // DEFAULT
   else {
-    enqueueSnackbar(error?.message, { variant: "error" });
+    toastError(error.message);
   }
 }

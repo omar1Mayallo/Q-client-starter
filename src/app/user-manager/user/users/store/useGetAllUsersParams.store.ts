@@ -1,4 +1,9 @@
-import { Location, NavigateFunction } from "react-router-dom";
+import {
+  Location,
+  NavigateFunction,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { create } from "zustand";
 
 interface PaginationParams {
@@ -20,7 +25,7 @@ interface GetAllUsersParamsStore {
   handleType: (type: string) => void;
 }
 
-const useGetAllUsersParamsStore = (
+const useUsersSearchParams = (
   location: Location,
   navigate: NavigateFunction,
 ) => {
@@ -120,6 +125,12 @@ const useGetAllUsersParamsStore = (
       });
     },
   }));
+};
+
+const useGetAllUsersParamsStore = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  return useUsersSearchParams(location, navigate)();
 };
 
 export default useGetAllUsersParamsStore;

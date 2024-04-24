@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { enqueueSnackbar } from "notistack";
+import i18next from "i18next";
 import { UseFormSetError } from "react-hook-form";
 import catchErrors from "../../../../../api/catchErrors";
 import { ResponseErrorsI } from "../../../../../api/types/response.types";
+import { toastSuccess } from "../../../../../shared/components/Toasts";
 import useUserStore from "../../../../../store/user.store";
 import useLoginAPIs from "../api/login.api";
 import { LoginFormData } from "./../validations/login.validation";
@@ -19,7 +20,7 @@ export default function useLoginService(
     onSuccess: (res) => {
       setToken(res.data.token);
       setUser(res.data.user);
-      enqueueSnackbar("Successfully Login", { variant: "success" });
+      toastSuccess(i18next.t("LOGIN_SUCCESS", { ns: "labels" }));
     },
     onError: (error: AxiosError<ResponseErrorsI<keyof LoginFormData>>) =>
       catchErrors<LoginFormData>(error, setError),

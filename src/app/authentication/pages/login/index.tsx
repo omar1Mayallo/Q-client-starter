@@ -1,13 +1,14 @@
-import { Container, TextField } from "@mui/material";
+import { Container } from "@mui/material";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import FormInput from "../../../../shared/components/Inputs/FormInput";
 import useUserStore from "../../../../store/user.store";
 import AuthForm from "../../components/AuthForm";
 import useLoginService from "./services/login.service";
 import useLoginFormData, {
   LoginFormData,
 } from "./validations/login.validation";
-import { useTranslation } from "react-i18next";
 
 export default function Login() {
   // FORM_VALIDATION
@@ -31,49 +32,52 @@ export default function Login() {
     if (token) return navigate("/");
   }, [token, navigate]);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation(["labels"]);
 
   return (
     <main className="flex h-lvh flex-col items-center justify-center">
       <Container component={"section"} maxWidth="xs">
         <AuthForm
           isLoading={isPending}
-          formHead="Sign In"
+          formHead={t("signIn")}
           handleSubmit={handleSubmit(onSubmit)}
         >
           {/* _________ EMAIL _________ */}
-          <TextField
-            inputProps={{ ...register("email") }}
-            error={!!errors.email}
+          <FormInput
+            isRequired
+            inputProps={{
+              ...register("email"),
+            }}
             helperText={
               errors.email?.message &&
-              t(`${errors.email?.message}`, { ns: "validations" })
+              t(`${errors.email?.message}`, { ns: ["validations"] })
             }
-            margin="normal"
-            required
+            error={!!errors.email}
             fullWidth
             type="email"
             id="email"
-            label="Email Address"
-            name="email"
             autoComplete="email"
             autoFocus
+            placeholder={t("email")}
+            labelKey={t("email")}
           />
+
           {/* _________ PASSWORD _________ */}
-          <TextField
-            inputProps={{ ...register("password") }}
+          <FormInput
+            labelKey={t("password")}
+            isRequired
+            inputProps={{
+              ...register("password"),
+            }}
             error={!!errors.password}
             helperText={
               errors.password?.message &&
-              t(`${errors.password?.message}`, { ns: "validations" })
+              t(`${errors.password?.message}`, { ns: ["validations"] })
             }
-            margin="normal"
-            required
             fullWidth
             type="password"
             id="password"
-            name="password"
-            label="Password"
+            placeholder={t("password")}
           />
         </AuthForm>
       </Container>

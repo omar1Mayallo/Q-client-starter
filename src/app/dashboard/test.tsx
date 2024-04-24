@@ -33,7 +33,7 @@ import { blue, green, red } from "@mui/material/colors";
 import { alpha } from "@mui/material/styles";
 import { visuallyHidden } from "@mui/utils";
 import * as React from "react";
-import CustomPagination from "../user-manager/user/users/components/TablePagination";
+import CustomPagination from "../user-manager/user/users/components/UsersTable/TableFooter/TablePagination";
 import SortIcons from "../../shared/components/Icons/SortIcons";
 import SearchInput from "./SearchField";
 import StatusButton from "./StatusButton";

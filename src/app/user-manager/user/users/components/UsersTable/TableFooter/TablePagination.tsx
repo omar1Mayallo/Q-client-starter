@@ -3,21 +3,15 @@ import PaginationItem from "@mui/material/PaginationItem";
 import {
   useLangStyle,
   useScreenSizeStyle,
-} from "../../../../../shared/hooks/useStyle";
-import useGetAllUsersParamsStore from "../store/useGetAllUsersParams.store";
-import { useLocation, useNavigate } from "react-router-dom";
+} from "../../../../../../../shared/hooks/useStyle";
+import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
 
 export default function TablePagination({
   numOfPages,
 }: {
   numOfPages: number;
 }) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { pagination, handlePagination } = useGetAllUsersParamsStore(
-    location,
-    navigate,
-  )();
+  const { pagination, handlePagination } = useGetAllUsersParamsStore();
 
   return (
     <Pagination

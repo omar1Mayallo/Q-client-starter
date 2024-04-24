@@ -1,8 +1,9 @@
 import { Logout, Person, Settings } from "@mui/icons-material";
 import { ListItemIcon, Menu, MenuItem, MenuProps } from "@mui/material";
-import { enqueueSnackbar } from "notistack";
-import useLoginAPIs from "../../../../../app/authentication/pages/login/api/login.api";
+import i18next from "i18next";
 import { useTranslation } from "react-i18next";
+import useLoginAPIs from "../../../../../app/authentication/pages/login/api/login.api";
+import { toastSuccess } from "../../../../../shared/components/Toasts";
 import { useLangStyle } from "../../../../../shared/hooks/useStyle";
 
 export interface DropdownMenuPropsI {
@@ -21,7 +22,7 @@ const DropdownMenu = ({
   const { logout } = useLoginAPIs();
   const handleLogout = () => {
     logout();
-    enqueueSnackbar("Logging Out...", { variant: "success" });
+    toastSuccess(i18next.t("LOGOUT_SUCCESS", { ns: "labels" }));
   };
   const { t } = useTranslation(["layout"]);
 

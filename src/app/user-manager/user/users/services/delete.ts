@@ -1,20 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { enqueueSnackbar } from "notistack";
 import { ResponseErrorsI } from "../../../../../api/types/response.types";
+import { toastError } from "../../../../../shared/components/Toasts";
 import useUsersAPIs from "../api";
-import { useLocation, useNavigate } from "react-router-dom";
 import useGetAllUsersParamsStore from "../store/useGetAllUsersParams.store";
 
 export default function useDeleteUsers() {
   const { deleteUser } = useUsersAPIs();
   const queryClient = useQueryClient();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { pagination, search, sort, status, type } = useGetAllUsersParamsStore(
-    location,
-    navigate,
-  )();
+
+  const { pagination, search, sort, status, type } =
+    useGetAllUsersParamsStore();
 
   return useMutation({
     mutationFn: (ids: number[]) => deleteUser(ids),
@@ -33,6 +29,6 @@ export default function useDeleteUsers() {
       });
     },
     onError: (error: AxiosError<ResponseErrorsI>) =>
-      enqueueSnackbar(error.response?.data.message || error.message),
+      toastError(error.response?.data.message || error.message),
   });
 }

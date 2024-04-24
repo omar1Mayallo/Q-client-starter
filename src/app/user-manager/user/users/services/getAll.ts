@@ -7,16 +7,12 @@ import {
 import { UserModel } from "../../../../../shared/types/models/User.model";
 import useUsersAPIs from "../api";
 import useGetAllUsersParamsStore from "../store/useGetAllUsersParams.store";
-import { useLocation, useNavigate } from "react-router-dom";
 
 export default function useGetAllUsers() {
   const { getAllUsers } = useUsersAPIs();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { pagination, search, sort, status, type } = useGetAllUsersParamsStore(
-    location,
-    navigate,
-  )();
+
+  const { pagination, search, sort, status, type } =
+    useGetAllUsersParamsStore();
 
   return useQuery<GetAllResponseI<UserModel>, AxiosError<ResponseErrorsI>>({
     queryKey: [

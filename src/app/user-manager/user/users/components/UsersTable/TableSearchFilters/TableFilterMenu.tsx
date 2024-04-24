@@ -1,4 +1,4 @@
-import { FilterList } from "@mui/icons-material";
+import { FilterAlt } from "@mui/icons-material";
 import {
   Box,
   Checkbox,
@@ -10,19 +10,15 @@ import {
 } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useLocation, useNavigate } from "react-router-dom";
-import useCheckedItems from "../../../../../shared/hooks/useCheckedItems";
-import useDropDownMenu from "../../../../../shared/hooks/useDropDownMenu";
-import { menuStatusItems, menuTypesItems } from "../data";
-import useGetAllUsersParamsStore from "../store/useGetAllUsersParams.store";
+import useCheckedItems from "../../../../../../../shared/hooks/useCheckedItems";
+import useDropDownMenu from "../../../../../../../shared/hooks/useDropDownMenu";
+import { menuStatusItems, menuTypesItems } from "../../../data";
+import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
+import i18next from "i18next";
+import { useLangStyle } from "../../../../../../../shared/hooks/useStyle";
 
 export default function TableFilterMenu() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { handleStatus, handleType } = useGetAllUsersParamsStore(
-    location,
-    navigate,
-  )();
+  const { handleStatus, handleType } = useGetAllUsersParamsStore();
   const {
     handleMenuItemClick: handleMenuStatusItemClick,
     checkedItems: checkedStatusItems,
@@ -35,9 +31,13 @@ export default function TableFilterMenu() {
 
   return (
     <Box>
-      <Tooltip title="Filter">
+      <Tooltip
+        title={i18next.t("filter", {
+          ns: "labels",
+        })}
+      >
         <IconButton onClick={handleClick}>
-          <FilterList />
+          <FilterAlt />
         </IconButton>
       </Tooltip>
 
@@ -50,7 +50,9 @@ export default function TableFilterMenu() {
           vertical: "top",
           horizontal: "center",
         }}
+        dir={useLangStyle("rtl", "ltr")}
       >
+        {/* FILTER_BY_STATUS */}
         <Typography
           component={"h2"}
           variant={"h6"}
@@ -62,7 +64,9 @@ export default function TableFilterMenu() {
             fontWeight: "600",
           }}
         >
-          Status
+          {i18next.t("status", {
+            ns: "labels",
+          })}
         </Typography>
         {menuStatusItems.map(({ label, value }) => (
           <MenuItem
@@ -80,6 +84,7 @@ export default function TableFilterMenu() {
                 <Checkbox
                   onClick={() => handleMenuStatusItemClick(value)}
                   checked={checkedStatusItems.includes(value)}
+                  sx={{ p: 0.7 }}
                 />
               }
               label={label}
@@ -89,6 +94,8 @@ export default function TableFilterMenu() {
         ))}
 
         <Divider sx={{ my: 1 }} />
+
+        {/* FILTER_BY_USER_TYPE */}
         <Typography
           component={"h2"}
           variant={"h6"}
@@ -100,7 +107,9 @@ export default function TableFilterMenu() {
             fontWeight: "600",
           }}
         >
-          Type
+          {i18next.t("type", {
+            ns: "labels",
+          })}
         </Typography>
         {menuTypesItems.map(({ label, value }) => (
           <MenuItem
@@ -118,6 +127,7 @@ export default function TableFilterMenu() {
                 <Checkbox
                   onClick={() => handleMenuTypeItemClick(value)}
                   checked={checkedTypeItems.includes(value)}
+                  sx={{ p: 0.7 }}
                 />
               }
               label={label}

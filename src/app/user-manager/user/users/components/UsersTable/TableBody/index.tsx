@@ -4,12 +4,13 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import useFactoryActions from "../hooks/useFactoryActions";
-import TableActions from "./TableActions";
-import { UserModel } from "../../../../../shared/types/models/User.model";
-import DeleteConfirmationModal from "./ConfirmDeleteDialog";
 import { useState } from "react";
-import useDeleteUsers from "../services/delete";
+import { useLocation, useNavigate } from "react-router-dom";
+import ConfirmDialog from "../../../../../../../shared/components/Dialogs/ConfirmDialog";
+import TableRowActions from "../../../../../../../shared/components/Table/TableRowActions";
+import { UserModel } from "../../../../../../../shared/types/models/User.model";
+import useFactoryActions from "../../../hooks/useFactoryActions";
+import useDeleteUsers from "../../../services/delete";
 
 interface TableBodyProps {
   data: UserModel[];
@@ -22,14 +23,16 @@ const TableBody: React.FC<TableBodyProps> = ({
   isSelected,
   handleClick,
 }) => {
-  // DELETE_DEVICE
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { mutate, isPending } = useDeleteUsers();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState<number>();
   const handleDelete = () => {
     if (selectedRowId) {
-      mutate([selectedRowId!], {
+      mutate([selectedRowId], {
         onSuccess: () => {
           setIsModalOpen(false);
         },
@@ -38,7 +41,7 @@ const TableBody: React.FC<TableBodyProps> = ({
   };
 
   const userActionHandlers: { [key: string]: (id: number) => void } = {
-    update: (id: number) => console.log(`Editing user... ${id}`),
+    update: (id: number) => navigate(`${location.pathname}/${id}`),
     delete: (id: number) => {
       setSelectedRowId(id);
       setIsModalOpen(true);
@@ -49,12 +52,18 @@ const TableBody: React.FC<TableBodyProps> = ({
 
   return (
     <>
-      <DeleteConfirmationModal
+      {/* DELETE_CONFIRMATION_DIALOG */}
+      <ConfirmDialog
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleDelete}
         loading={isPending}
+        head="Confirm Deletion"
+        contentText="Are you sure you want to delete this item(s)? This action cannot be
+        undone."
       />
+
+      {/* UPDATE_DIALOG */}
       <MUITableBody>
         {data.map((row) => {
           const isItemSelected = isSelected(row.id);
@@ -78,7 +87,12 @@ const TableBody: React.FC<TableBodyProps> = ({
                   disabled={isHaveNotDeleteAction}
                 />
               </TableCell>
-              <TableCell component="th" id={`${row.id}`} scope="row">
+              <TableCell
+                component="th"
+                id={`${row.id}`}
+                scope="row"
+                align="center"
+              >
                 {row.id}
               </TableCell>
               <TableCell align="center">{row.username}</TableCell>
@@ -87,7 +101,7 @@ const TableBody: React.FC<TableBodyProps> = ({
               <TableCell align="center">{row.type}</TableCell>
               <TableCell align="center">{`${row.created_at}`}</TableCell>
               <TableCell align="center">
-                <TableActions actionsItems={actionsItems!} id={row.id} />
+                <TableRowActions actionsItems={actionsItems!} id={row.id} />
               </TableCell>
             </TableRow>
           );

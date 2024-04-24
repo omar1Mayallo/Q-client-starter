@@ -1,14 +1,15 @@
 import { Table as MuiTable, Paper, TableContainer } from "@mui/material";
+import i18next from "i18next";
 import { PaginationDetails } from "../../../../../../api/types/response.types";
+import TableNoData from "../../../../../../shared/components/Table/TableNoData";
 import useSelectRows from "../../../../../../shared/hooks/useSelectRows";
 import { UserModel } from "../../../../../../shared/types/models/User.model";
 import { usersHeadCells } from "../../data";
-import TableIconButtons from "../TableIconButtons";
-import TableBody from "../TableBody";
-import TableFooter from "../TableFooter";
-import TableHeader from "../TableHeader";
-import TableNoData from "../TableNoData";
-import TableSearch from "../TableSearch";
+import TableBody from "./TableBody";
+import TableFooter from "./TableFooter";
+import TableHeader from "./TableHeader";
+import TableIconButtons from "./TableIconButtons";
+import TableSearchFilters from "./TableSearchFilters";
 
 const UsersTable = ({
   usersData,
@@ -26,7 +27,7 @@ const UsersTable = ({
       <TableIconButtons />
       <Paper sx={{ width: "100%" }}>
         {/* TABLE_SEARCH_FILTERS */}
-        <TableSearch numSelected={selected.length} />
+        <TableSearchFilters selected={selected} />
 
         {/* TABLE_CONTENT */}
         <TableContainer>
@@ -40,7 +41,7 @@ const UsersTable = ({
               numSelected={selected.length}
               onSelectAllClick={handleSelectAllClick}
               rowCount={usersData.length}
-              headCells={usersHeadCells}
+              headCells={usersHeadCells(i18next.t)}
             />
 
             {/* TABLE_BODY */}

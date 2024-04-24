@@ -1,7 +1,8 @@
 import { Stack, TextField, Toolbar } from "@mui/material";
-import { useScreenSizeStyle } from "../../../../../shared/hooks/useStyle";
+import { useScreenSizeStyle } from "../../../../../../../shared/hooks/useStyle";
 import TablePagination from "./TablePagination";
 import TablePerPageMenu from "./TablePerPageMenu";
+import i18next from "i18next";
 
 const TableFooter = ({
   totalNumOfItems,
@@ -32,7 +33,7 @@ const TableFooter = ({
         <TextField
           disabled
           id="outlined-disabled"
-          label="Total"
+          label={i18next.t("Total", { ns: "labels" })}
           value={totalNumOfItems}
           size={"small"}
           sx={{

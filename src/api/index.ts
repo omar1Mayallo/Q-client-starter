@@ -1,7 +1,7 @@
 import axios from "axios";
 import i18next from "i18next";
 import Cookies from "js-cookie";
-import { enqueueSnackbar } from "notistack";
+import { toastError } from "../shared/components/Toasts";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -33,11 +33,11 @@ api.interceptors.response.use(
     ) {
       // If I send error message from backend
       if (error.response?.data?.message) {
-        enqueueSnackbar(error.response?.data?.message, { variant: "error" });
+        toastError(error.response?.data?.message);
       }
       // else return generic error message
       else {
-        enqueueSnackbar("Access Denied", { variant: "error" });
+        toastError(i18next.t("ACCESS_DENIED", { ns: "labels" }));
       }
       setTimeout(() => {
         Cookies.remove("token");

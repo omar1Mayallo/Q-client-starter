@@ -63,6 +63,11 @@ const ThemeProvider: React.FC<{
     <ColorThemeProvider theme={theme}>
       <CssBaseline />
       {children}
+      <style>{`
+          input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px ${theme.palette.background.default} inset !important;
+          }
+        `}</style>
     </ColorThemeProvider>
   );
 };
