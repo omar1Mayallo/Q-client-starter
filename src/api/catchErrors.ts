@@ -18,7 +18,7 @@ export default function catchErrors<DataT extends FieldValues>(
 
   // SERVER_VALIDATION_ERRORS
   else if (resErrors?.errors) {
-    toastError(i18next.t("VALIDATION_ERROR", { ns: "labels" }));
+    toastError(i18next.t("VALIDATION_ERROR"));
     resErrors?.errors.forEach(({ field, message }) => {
       setError(field as Path<DataT>, { message }, { shouldFocus: true });
     });

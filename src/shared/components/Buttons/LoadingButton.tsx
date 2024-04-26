@@ -16,7 +16,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
   ...buttonProps
 }) => {
   const { t } = useTranslation();
-  const loadingText = loadingTextProp || t("loading", { ns: "labels" });
+  const loadingText = loadingTextProp || t("loading");
 
   return (
     <Button

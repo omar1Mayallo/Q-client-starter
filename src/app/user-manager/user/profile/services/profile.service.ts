@@ -13,7 +13,7 @@ export default function useGetLoggedUser() {
     queryKey: [CACHED_KEYS.LOGGED_USER],
     queryFn: () => getLoggedUser(),
     enabled: !!token, // Just trigger if user authenticated
-    staleTime: Infinity, // Consider as Fresh Forever
+    // staleTime: Infinity, // Consider as Fresh Forever
     placeholderData: user,
   });
 }

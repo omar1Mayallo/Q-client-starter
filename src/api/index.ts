@@ -37,7 +37,7 @@ api.interceptors.response.use(
       }
       // else return generic error message
       else {
-        toastError(i18next.t("ACCESS_DENIED", { ns: "labels" }));
+        toastError(i18next.t("ACCESS_DENIED"));
       }
       setTimeout(() => {
         Cookies.remove("token");

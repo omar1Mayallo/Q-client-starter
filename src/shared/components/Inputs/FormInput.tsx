@@ -1,4 +1,4 @@
-import { Box, MenuItem } from "@mui/material";
+import { Box } from "@mui/material";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React from "react";
@@ -7,13 +7,10 @@ import { useLangStyle } from "../../hooks/useStyle";
 
 type FormInputProps = {
   labelKey: string;
-  isRequired?: boolean;
 } & TextFieldProps;
 
 const FormInput: React.FC<FormInputProps> = ({
   labelKey,
-  isRequired = false,
-
   ...textFieldProps
 }) => {
   const { t } = useTranslation();
@@ -27,25 +24,25 @@ const FormInput: React.FC<FormInputProps> = ({
         mb={0.5}
       >
         <Typography component={"span"} variant="subtitle2">
-          {t(labelKey, { ns: "labels" })}
+          {t(labelKey)}
         </Typography>
-        {isRequired && <sup>*</sup>}
+        {(textFieldProps.required || false) && <sup>*</sup>}
       </Typography>
       <TextField
         inputProps={{ dir: useLangStyle("rtl", "ltr") }}
         FormHelperTextProps={{
           style: { textAlign: "start" },
         }}
-        required={isRequired}
         {...textFieldProps}
-      >
-        {textFieldProps.select && (
-          <MenuItem value="" disabled>
-            {textFieldProps.placeholder}
-          </MenuItem>
-        )}
-        {textFieldProps.children}
-      </TextField>
+        // sx={{
+        //   "& .MuiSelect-nativeInput": {
+        //     top: 0,
+        //     opacity: textFieldProps.select && textFieldProps.value ? 0 : 1,
+        //     px: 2,
+        //     bgcolor: "transparent",
+        //   },
+        // }}
+      />
     </Box>
   );
 };

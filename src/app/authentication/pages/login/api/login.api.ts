@@ -25,7 +25,7 @@ const useLoginAPIs = () => {
   function logout(durationToRedirectToLogin: number = 200) {
     Cookies.remove("token");
     queryClient.removeQueries({
-      queryKey: [CACHED_KEYS.LOGGED_USER_PERMISSIONS],
+      queryKey: [CACHED_KEYS.LOGGED_USER_PERMISSIONS, CACHED_KEYS.LOGGED_USER],
     });
     setTimeout(() => {
       window.location.href = "/login";

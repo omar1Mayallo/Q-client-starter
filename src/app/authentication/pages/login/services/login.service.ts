@@ -20,7 +20,7 @@ export default function useLoginService(
     onSuccess: (res) => {
       setToken(res.data.token);
       setUser(res.data.user);
-      toastSuccess(i18next.t("LOGIN_SUCCESS", { ns: "labels" }));
+      toastSuccess(i18next.t("LOGIN_SUCCESS"));
     },
     onError: (error: AxiosError<ResponseErrorsI<keyof LoginFormData>>) =>
       catchErrors<LoginFormData>(error, setError),

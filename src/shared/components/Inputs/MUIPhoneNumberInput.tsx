@@ -10,14 +10,12 @@ type MUIPhoneNumberInputProps = {
   labelKey: string;
   value: string;
   handleChange: (newPhone: string, info: MuiTelInputInfo) => void;
-  isRequired?: boolean;
 } & TextFieldProps;
 
 const MUIPhoneNumberInput: React.FC<MUIPhoneNumberInputProps> = ({
   labelKey,
   value,
   handleChange,
-  isRequired = false,
   ...textFieldProps
 }) => {
   const { t } = useTranslation();
@@ -44,15 +42,14 @@ const MUIPhoneNumberInput: React.FC<MUIPhoneNumberInputProps> = ({
         mb={0.5}
       >
         <Typography component="span" variant="subtitle2">
-          {t(labelKey, { ns: "labels" })}
+          {t(labelKey)}
         </Typography>
-        {isRequired && <sup>*</sup>}
+        {restTextFieldProps.required && <sup>*</sup>}
       </Typography>
       <MuiTelInput
         value={value}
         onChange={handleChange}
         fullWidth
-        required={isRequired}
         FormHelperTextProps={{
           style: { textAlign: "start" },
         }}

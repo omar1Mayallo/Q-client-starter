@@ -7,20 +7,27 @@ import { IBreadcrumbs } from "../../../../../shared/types/Interfaces/Breadcrumbs
 // _BREADCRUMBS
 export const userBreadcrumbs = (
   t: TFunction<["translation", ...string[]], undefined>,
-): IBreadcrumbs[] => [
-  { name: t("USERS_MANAGEMENT", { ns: "labels" }) },
-  { name: t("USERS", { ns: "labels" }) },
-];
+): IBreadcrumbs[] => [{ name: t("USERS_MANAGEMENT") }, { name: t("USERS") }];
 export const userDetailsBreadcrumbs = (
   t: TFunction<["translation", ...string[]], undefined>,
   id: string,
 ): IBreadcrumbs[] => [
-  { name: t("USERS_MANAGEMENT", { ns: "labels" }) },
+  { name: t("USERS_MANAGEMENT") },
   {
-    name: t("USERS", { ns: "labels" }),
+    name: t("USERS"),
     url: "/users-management/users",
   },
-  { name: `${t("id", { ns: "labels" })}(${id})` },
+  { name: `${t("id")}(${id})` },
+];
+export const addUserBreadcrumbs = (
+  t: TFunction<["translation", ...string[]], undefined>,
+): IBreadcrumbs[] => [
+  { name: t("USERS_MANAGEMENT") },
+  {
+    name: t("USERS"),
+    url: "/users-management/users",
+  },
+  { name: t("ADD_USER") },
 ];
 
 // _TABLE_HEAD_COLUMNS_CELLS
@@ -31,49 +38,49 @@ export const usersHeadCells = (
     id: "id",
     numeric: true,
     disablePadding: false,
-    label: t("id", { ns: "labels" }),
+    label: t("id"),
     sortable: true,
   },
   {
     id: "username",
     numeric: true,
     disablePadding: false,
-    label: t("username", { ns: "labels" }),
+    label: t("username"),
     sortable: true,
   },
   {
     id: "email",
     numeric: true,
     disablePadding: false,
-    label: t("email", { ns: "labels" }),
+    label: t("email"),
     sortable: true,
   },
   {
     id: "status",
     numeric: true,
     disablePadding: false,
-    label: t("status", { ns: "labels" }),
+    label: t("status"),
     sortable: true,
   },
   {
     id: "type",
     numeric: true,
     disablePadding: false,
-    label: t("type", { ns: "labels" }),
+    label: t("type"),
     sortable: true,
   },
   {
     id: "created_at",
     numeric: true,
     disablePadding: false,
-    label: t("created_at", { ns: "labels" }),
+    label: t("created_at"),
     sortable: false,
   },
   {
     id: "actions",
     numeric: true,
     disablePadding: false,
-    label: t("actions", { ns: "labels" }),
+    label: t("actions"),
     sortable: false,
   },
 ];

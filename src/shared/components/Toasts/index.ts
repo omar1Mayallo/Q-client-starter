@@ -10,7 +10,7 @@ type ToastErrorFunction = (message?: string) => void;
  * @returns {void}
  */
 export const toastSuccess: ToastErrorFunction = (
-  message: string = i18next.t("SAVED_SUCCESS", { ns: "labels" }),
+  message: string = i18next.t("SAVED_SUCCESS"),
 ) => {
   enqueueSnackbar(message, { variant: "success" });
 };
@@ -22,7 +22,7 @@ export const toastSuccess: ToastErrorFunction = (
  * @returns {void}
  */
 export const toastError: ToastErrorFunction = (
-  message: string = i18next.t("SOMETHING_WENT_WRONG", { ns: "labels" }),
+  message: string = i18next.t("SOMETHING_WENT_WRONG"),
 ): void => {
   enqueueSnackbar(message, { variant: "error" });
 };

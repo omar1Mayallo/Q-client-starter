@@ -10,7 +10,8 @@ import Cookies from "js-cookie";
 
 i18next.use(initReactI18next).init({
   lng: Cookies.get("lang") || "en", // Default language
-  debug: true,
+  // debug: true,
+  defaultNS: "labels",
   resources: {
     en: {
       layout: layoutEN,

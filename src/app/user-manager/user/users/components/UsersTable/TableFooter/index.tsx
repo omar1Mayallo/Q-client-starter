@@ -33,7 +33,7 @@ const TableFooter = ({
         <TextField
           disabled
           id="outlined-disabled"
-          label={i18next.t("Total", { ns: "labels" })}
+          label={i18next.t("Total")}
           value={totalNumOfItems}
           size={"small"}
           sx={{

@@ -24,7 +24,7 @@ const BackButton: React.FC<BackButtonProps> = () => {
       onClick={handleBackClick}
       sx={{ gap: 0.7, "& .MuiButton-startIcon": { m: 0 } }}
     >
-      {i18next.t("BACK", { ns: "labels" })}
+      {i18next.t("BACK")}
     </Button>
   );
 };

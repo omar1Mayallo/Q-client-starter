@@ -8,12 +8,12 @@ const TablePerPageMenu = () => {
   return (
     <FormControl size="small" sx={{ minWidth: 90 }}>
       <InputLabel id="demo-simple-select-helper-label">
-        {i18next.t("PerPage", { ns: "labels" })}
+        {i18next.t("PerPage")}
       </InputLabel>
       <Select
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
-        label={i18next.t("PerPage", { ns: "labels" })}
+        label={i18next.t("PerPage")}
         value={pagination.limit}
         onChange={(e) => {
           handleChangeLimit(+e.target.value);

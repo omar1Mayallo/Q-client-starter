@@ -13,7 +13,7 @@ const Users = () => {
   return (
     <>
       {/* PAGE_HEAD */}
-      <PageHead title={i18next.t("USERS", { ns: "labels" })}>
+      <PageHead title={i18next.t("USERS")}>
         <PageBreadcrumbs breadcrumbs={userBreadcrumbs(i18next.t)} />
       </PageHead>
 

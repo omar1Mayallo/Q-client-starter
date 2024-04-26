@@ -5,7 +5,6 @@ import {
   Button,
   FormControlLabel,
   Grid,
-  MenuItem,
   Paper,
   Switch,
   Tooltip,
@@ -13,20 +12,34 @@ import {
 } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-import FormInput from "../../../../../../../shared/components/Inputs/FormInput";
+import FormInput from "../../../../../../shared/components/Inputs/FormInput";
 import i18next from "i18next";
 
-import MUIPhoneNumberInput from "../../../../../../../shared/components/Inputs/MUIPhoneNumberInput";
+import MUIPhoneNumberInput from "../../../../../../shared/components/Inputs/MUIPhoneNumberInput";
 import { MuiTelInputInfo } from "mui-tel-input";
+import SelectInput, {
+  OptionType,
+} from "../../../../../../shared/components/Inputs/SelectInput";
+
+interface FormDataT {
+  email: string;
+  username: string;
+  password: string;
+  type: string;
+  status: boolean;
+  roles: string[];
+  phone: string;
+}
 
 const UserForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormDataT>({
     email: "",
     username: "",
     password: "",
     type: "",
-    status: "",
-    roles: "",
+    status: false,
+    roles: [],
+    phone: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,9 +75,44 @@ const UserForm = () => {
     }
   };
 
-  const [phone, setPhone] = React.useState("");
   const handleChangePhone = (_: string, info: MuiTelInputInfo) => {
-    setPhone(info.numberValue!);
+    setFormData((prevData) => ({
+      ...prevData,
+      phone: info.numberValue!,
+    }));
+  };
+
+  const typeOptions = [
+    { label: "Administrative", value: "ADMINISTRATIVE" },
+    { label: "Portal", value: "PORTAL" },
+    { label: "Service Provider", value: "SERVICE_PROVIDER" },
+  ];
+  const handleSelectTypes = (
+    _: React.SyntheticEvent<Element, Event>,
+    selectedItem: OptionType<string> | null,
+  ) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      type: selectedItem ? selectedItem.value : "",
+    }));
+  };
+
+  const roleOptions = [
+    { label: "User", value: "USER" },
+    { label: "Admin", value: "ADMIN" },
+    { label: "Editor", value: "EDITOR" },
+    { label: "عرض فقط", value: "VIEWER" },
+    { label: "Custom Role", value: "CUSTOM" },
+  ];
+  const handleSelectRoles = (
+    _: React.SyntheticEvent<Element, Event>,
+    newValue: OptionType<string>[] | null,
+  ) => {
+    const selectedRoles = newValue ? newValue.map((item) => item.value) : [];
+    setFormData((prevData) => ({
+      ...prevData,
+      roles: selectedRoles,
+    }));
   };
 
   return (
@@ -117,10 +165,7 @@ const UserForm = () => {
 
                   {/* UPLOAD_BUTTON */}
                   <label htmlFor="upload-image-input">
-                    <Tooltip
-                      title={i18next.t("changeImg", { ns: "labels" })}
-                      arrow
-                    >
+                    <Tooltip title={i18next.t("changeImg")} arrow>
                       <Button
                         variant="text"
                         component="span"
@@ -154,10 +199,7 @@ const UserForm = () => {
 
                   {/* REMOVE_BUTTON */}
                   {selectedFile && (
-                    <Tooltip
-                      title={i18next.t("removeImg", { ns: "labels" })}
-                      arrow
-                    >
+                    <Tooltip title={i18next.t("removeImg")} arrow>
                       <Button
                         onClick={handleDeleteSelectedImage}
                         variant="text"
@@ -216,13 +258,13 @@ const UserForm = () => {
                 <Grid item xs={12} lg={6}>
                   <FormInput
                     fullWidth
-                    labelKey={i18next.t("email", { ns: "labels" })}
-                    placeholder={i18next.t("email", { ns: "labels" })}
+                    labelKey={i18next.t("email")}
+                    placeholder={i18next.t("email")}
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     variant="outlined"
-                    isRequired
+                    required
                   />
                 </Grid>
 
@@ -230,13 +272,13 @@ const UserForm = () => {
                 <Grid item xs={12} lg={6}>
                   <FormInput
                     fullWidth
-                    labelKey={i18next.t("username", { ns: "labels" })}
-                    placeholder={i18next.t("username", { ns: "labels" })}
+                    labelKey={i18next.t("username")}
+                    placeholder={i18next.t("username")}
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
                     variant="outlined"
-                    isRequired
+                    required
                   />
                 </Grid>
 
@@ -244,63 +286,51 @@ const UserForm = () => {
                 <Grid item xs={12} lg={6}>
                   <FormInput
                     fullWidth
-                    labelKey={i18next.t("password", { ns: "labels" })}
-                    placeholder={i18next.t("password", { ns: "labels" })}
+                    labelKey={i18next.t("password")}
+                    placeholder={i18next.t("password")}
                     name="password"
                     type="password"
                     value={formData.password}
                     onChange={handleChange}
                     variant="outlined"
-                    isRequired
+                    required
                   />
                 </Grid>
 
                 {/* Type */}
                 <Grid item xs={12} lg={6}>
-                  <FormInput
-                    fullWidth
-                    labelKey={i18next.t("type", { ns: "labels" })}
-                    placeholder={i18next.t("type", { ns: "labels" })}
-                    name="type"
+                  <SelectInput<string>
+                    options={typeOptions}
+                    labelKey={i18next.t("type")}
+                    placeholder={i18next.t("type")}
+                    required
                     value={formData.type}
-                    onChange={handleChange}
-                    variant="outlined"
-                    isRequired
-                    select
-                  >
-                    <MenuItem value="admin">Administritive</MenuItem>
-                    <MenuItem value="user">Portal</MenuItem>
-                  </FormInput>
+                    onChange={handleSelectTypes}
+                  />
                 </Grid>
 
                 {/* Roles */}
                 <Grid item xs={12} lg={6}>
-                  <FormInput
-                    fullWidth
-                    labelKey={i18next.t("roles", { ns: "labels" })}
-                    placeholder={i18next.t("roles", { ns: "labels" })}
-                    name="roles"
+                  <SelectInput<string>
+                    options={roleOptions}
+                    labelKey={i18next.t("roles")}
+                    placeholder={i18next.t("roles")}
+                    required
                     value={formData.roles}
-                    onChange={handleChange}
-                    variant="outlined"
-                    isRequired
-                    select
-                  >
-                    <MenuItem value="admin">Role 1</MenuItem>
-                    <MenuItem value="user">Role 2</MenuItem>
-                    <MenuItem value="user">Role 3</MenuItem>
-                  </FormInput>
+                    onChange={handleSelectRoles}
+                    multiple
+                  />
                 </Grid>
 
                 {/* Phone */}
                 <Grid item xs={12} lg={6}>
                   <MUIPhoneNumberInput
-                    value={phone}
+                    value={formData.phone}
                     handleChange={handleChangePhone}
                     fullWidth
-                    labelKey={i18next.t("phone", { ns: "labels" })}
-                    placeholder={i18next.t("phone", { ns: "labels" })}
-                    isRequired
+                    labelKey={i18next.t("phone")}
+                    placeholder={i18next.t("phone")}
+                    required
                   />
                 </Grid>
 
@@ -308,12 +338,14 @@ const UserForm = () => {
                 <Grid item xs={12} lg={6} className="flex flex-row gap-2">
                   <FormControlLabel
                     control={<Switch defaultChecked />}
-                    label={i18next.t("status", { ns: "labels" })}
+                    label={i18next.t("status")}
                     color="success"
+                    required
                   />
                   <FormControlLabel
                     control={<Switch />}
-                    label={i18next.t("loginWithOTP", { ns: "labels" })}
+                    label={i18next.t("loginWithOTP")}
+                    required
                   />
                 </Grid>
               </Grid>
@@ -326,7 +358,7 @@ const UserForm = () => {
               color="primary"
               sx={{ borderRadius: "10px", width: 250 }}
             >
-              {i18next.t("SAVE", { ns: "labels" })}
+              {i18next.t("SAVE")}
             </Button>
           </Box>
         </Box>

@@ -22,7 +22,7 @@ const DropdownMenu = ({
   const { logout } = useLoginAPIs();
   const handleLogout = () => {
     logout();
-    toastSuccess(i18next.t("LOGOUT_SUCCESS", { ns: "labels" }));
+    toastSuccess(i18next.t("LOGOUT_SUCCESS"));
   };
   const { t } = useTranslation(["layout"]);
 

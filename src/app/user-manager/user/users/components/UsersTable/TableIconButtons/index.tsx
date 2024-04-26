@@ -7,10 +7,13 @@ import { isEmpty } from "../../../../../../../shared/helpers/checks";
 import useCommonActions from "../../../../../../../shared/hooks/useCommonActions";
 import useGetAllUsers from "../../../services/getAll";
 import i18next from "i18next";
+import { useNavigate } from "react-router-dom";
 
 const TableIconButtons = () => {
   const { handleResetAction, queryParams } = useCommonActions();
   const { data, isSuccess } = useGetAllUsers();
+  const navigate = useNavigate();
+
   return (
     <Stack direction={"row"} justifyContent={"end"} gap={1} my={3}>
       {isSuccess && <ExportToExcelButton data={data.data} fileName="Users" />}
@@ -23,7 +26,7 @@ const TableIconButtons = () => {
         variant={green[500]}
         textVariant={green[900]}
         hover={green[700]}
-        onClick={() => undefined}
+        onClick={() => navigate("/users-management/users/add")}
       />
       <IconButtonTooltip
         tooltip={i18next.t("reset", {

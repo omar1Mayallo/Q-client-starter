@@ -1,7 +1,11 @@
-import { useGetUserActions } from "../../app/user-manager/permissions/services/permissions.service";
+import { useQueryClient } from "@tanstack/react-query";
+import CACHED_KEYS from "../constants/query-cached-keys";
 
 const useUserActions = (entityName: string) => {
-  const { data: actions } = useGetUserActions();
+  const queryClient = useQueryClient();
+  const actions = queryClient.getQueryData<string[]>([
+    CACHED_KEYS.LOGGED_USER_ACTIONS,
+  ]);
 
   const userActions = actions
     ?.filter((item) => item.startsWith(`${entityName}/`))
