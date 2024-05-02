@@ -14,7 +14,7 @@ const AddUser = () => {
 
       <BackButton />
 
-      <UserForm />
+      {/* <UserForm /> */}
     </>
   );
 };

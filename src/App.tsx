@@ -91,6 +91,10 @@ function App() {
                 <Route path="invoices" element={<Invoices />} />
                 <Route path="payments" element={<Payments />} />
                 <Route path="dues" element={<Dues />} />
+                <Route path="billing-settings">
+                  <Route index element={<Navigate to={"/login"} />} />
+                  <Route path="configurations" element={<Invoices />} />
+                </Route>
               </Route>
             </Route>
 

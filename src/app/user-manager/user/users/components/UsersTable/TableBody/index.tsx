@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  Chip,
   TableBody as MUITableBody,
   TableCell,
   TableRow,
@@ -11,6 +12,8 @@ import TableRowActions from "../../../../../../../shared/components/Table/TableR
 import { UserModel } from "../../../../../../../shared/types/models/User.model";
 import useFactoryActions from "../../../hooks/useFactoryActions";
 import useDeleteUsers from "../../../services/delete";
+import { getStatusColor } from "../../../../../../../shared/helpers/factory";
+import { formatToRegularString } from "../../../../../../../shared/helpers/formats";
 
 interface TableBodyProps {
   data: UserModel[];
@@ -97,8 +100,22 @@ const TableBody: React.FC<TableBodyProps> = ({
               </TableCell>
               <TableCell align="center">{row.username}</TableCell>
               <TableCell align="center">{row.email}</TableCell>
-              <TableCell align="center">{row.status}</TableCell>
-              <TableCell align="center">{row.type}</TableCell>
+              <TableCell align="center">
+                <Chip
+                  label={formatToRegularString(row.status)}
+                  color={getStatusColor(row.status)}
+                  size="small"
+                  variant="outlined"
+                />
+              </TableCell>
+              <TableCell align="center">
+                <Chip
+                  label={formatToRegularString(row.type)}
+                  color={"default"}
+                  size="small"
+                  variant="outlined"
+                />
+              </TableCell>
               <TableCell align="center">{`${row.created_at}`}</TableCell>
               <TableCell align="center">
                 <TableRowActions actionsItems={actionsItems!} id={row.id} />

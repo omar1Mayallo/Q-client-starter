@@ -1,8 +1,11 @@
 {
-  "Validation_Errors": {
-    "REQUIRED": "{property} id required",
-    "INVALID_EMAIL": "Invalid Email Format",
-    "PASSWORD_REGEX": "Invalid password format. It must contain at least one digit, one lowercase letter, one uppercase letter, one special character, and be between 8 and 25 characters long.",
-    "USERNAME_REGEX": "Invalid username format. It must contain only letters, numbers, underscores, and Arabic characters, with a length between 3 and 30 characters."
-  }
+  "EMAIL_REQUIRED": "Email is required",
+  "PASSWORD_REQUIRED": "Password is required",
+  "INVALID_EMAIL": "Invalid email format",
+  "PASSWORD_REGEX": "Invalid password format. It must contain a lowercase letter, an uppercase letter, a special character, and be between 8 and 25 characters long",
+  "USERNAME_REGEX": "Invalid username format. It should only contain letters, numbers, underscores, and Arabic characters, and be between 3 and 30 characters long",
+  "USERNAME_REQUIRED": "Username is required",
+  "INVALID_PHONE": "Invalid phone number",
+  "STATUS_REQUIRED": "Status is required",
+  "USER_TYPE_REQUIRED": "User type is required"
 }

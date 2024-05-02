@@ -5,12 +5,14 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useLangStyle } from "../../hooks/useStyle";
 
-type FormInputProps = {
+export type FormInputProps = {
   labelKey: string;
+  isRequired?: boolean;
 } & TextFieldProps;
 
 const FormInput: React.FC<FormInputProps> = ({
   labelKey,
+  isRequired = false,
   ...textFieldProps
 }) => {
   const { t } = useTranslation();
@@ -26,7 +28,7 @@ const FormInput: React.FC<FormInputProps> = ({
         <Typography component={"span"} variant="subtitle2">
           {t(labelKey)}
         </Typography>
-        {(textFieldProps.required || false) && <sup>*</sup>}
+        {isRequired && <sup>*</sup>}
       </Typography>
       <TextField
         inputProps={{ dir: useLangStyle("rtl", "ltr") }}
@@ -34,14 +36,6 @@ const FormInput: React.FC<FormInputProps> = ({
           style: { textAlign: "start" },
         }}
         {...textFieldProps}
-        // sx={{
-        //   "& .MuiSelect-nativeInput": {
-        //     top: 0,
-        //     opacity: textFieldProps.select && textFieldProps.value ? 0 : 1,
-        //     px: 2,
-        //     bgcolor: "transparent",
-        //   },
-        // }}
       />
     </Box>
   );

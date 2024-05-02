@@ -20,6 +20,7 @@
     "@tanstack/react-query-devtools": "^5.18.1",
     "@types/react-helmet": "^6.1.11",
     "axios": "^1.6.7",
+    "buffer": "^6.0.3",
     "file-saver": "^2.0.5",
     "i18next": "^23.8.2",
     "js-cookie": "^3.0.5",

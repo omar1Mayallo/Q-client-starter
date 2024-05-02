@@ -1,7 +1,10 @@
 import { TFunction } from "i18next";
 import { TableHeadCell } from "../../../../../shared/types/Interfaces/TableCellHead.interface";
-import { UserModel } from "../../../../../shared/types/models/User.model";
-import { USER_STATUS, USER_TYPES } from "../types";
+import {
+  USER_STATUS,
+  USER_TYPE,
+  UserModel,
+} from "../../../../../shared/types/models/User.model";
 import { IBreadcrumbs } from "../../../../../shared/types/Interfaces/Breadcrumbs.interface";
 
 // _BREADCRUMBS
@@ -93,14 +96,14 @@ export const menuStatusItems = [
 ];
 export const menuTypesItems = [
   { label: "All", value: "ALL" },
-  { label: "Administrative", value: USER_TYPES.ADMINISTRATIVE },
-  { label: "Portal", value: USER_TYPES.PORTAL },
+  { label: "Administrative", value: USER_TYPE.ADMINISTRATIVE },
+  { label: "Portal", value: USER_TYPE.PORTAL },
 ];
 
 // _USER_TYPES_OPTIONS
 export const userTypes = [
-  { label: "Administrative", value: USER_TYPES.ADMINISTRATIVE },
-  { label: "Portal", value: USER_TYPES.PORTAL },
+  { label: "Administrative", value: USER_TYPE.ADMINISTRATIVE },
+  { label: "Portal", value: USER_TYPE.PORTAL },
 ];
 // _USER_TYPES_OPTIONS
 export const userStatus = [

@@ -21,10 +21,15 @@ export async function postData<TRes, TData>(url: string, data?: TData) {
   return res;
 }
 
-export async function putData<TRes, TData>(url: string, data?: TData) {
+export async function putData<TRes, TData>(
+  url: string,
+  data?: TData,
+  isFormData: boolean = false,
+) {
   const res = await api.put<TRes>(url, data, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
+      ...(isFormData && { "Content-Type": "multipart/form-data" }),
     },
   });
   return res;

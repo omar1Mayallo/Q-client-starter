@@ -1,7 +1,7 @@
-import React from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useTranslation } from "react-i18next";
+import i18next from "i18next";
+import React from "react";
 
 interface LoadingButtonProps extends ButtonProps {
   label: string;
@@ -15,8 +15,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
   loadingText: loadingTextProp,
   ...buttonProps
 }) => {
-  const { t } = useTranslation();
-  const loadingText = loadingTextProp || t("loading");
+  const loadingText = loadingTextProp || i18next.t("loading");
 
   return (
     <Button

@@ -15,7 +15,7 @@ export default function useGetUserPermissions() {
     enabled: !!token, // Just trigger if user authenticated
     // staleTime: Infinity, // Consider as Fresh Forever
     placeholderData: userPermissions,
-    refetchInterval: 60000, // Refetch every 1 minute
+    refetchInterval: 60000 / 6, // Refetch every 1 minute
   });
 }
 
@@ -28,6 +28,6 @@ export function useGetUserActions() {
     enabled: !!token, // Just trigger if user authenticated
     // staleTime: Infinity, // Consider as Fresh Forever
     placeholderData: userActions,
-    refetchInterval: 60000, // Refetch every 1 minute
+    refetchInterval: 60000 / 6, // Refetch every 1 minute
   });
 }

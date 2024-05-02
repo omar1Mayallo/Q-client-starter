@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
+import i18next from "i18next";
 import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../../../shared/components/Inputs/FormInput";
 import useUserStore from "../../../../store/user.store";
@@ -32,52 +32,44 @@ export default function Login() {
     if (token) return navigate("/");
   }, [token, navigate]);
 
-  const { t } = useTranslation(["labels"]);
-
   return (
     <main className="flex h-lvh flex-col items-center justify-center">
       <Container component={"section"} maxWidth="xs">
         <AuthForm
           isLoading={isPending}
-          formHead={t("signIn")}
+          formHead={i18next.t("signIn", { ns: ["labels"] })}
           handleSubmit={handleSubmit(onSubmit)}
         >
           {/* _________ EMAIL _________ */}
           <FormInput
-            isRequired
             inputProps={{
               ...register("email"),
             }}
-            helperText={
-              errors.email?.message &&
-              t(`${errors.email?.message}`, { ns: ["validations"] })
-            }
+            helperText={errors.email?.message}
             error={!!errors.email}
             fullWidth
             type="email"
             id="email"
             autoComplete="email"
             autoFocus
-            placeholder={t("email")}
-            labelKey={t("email")}
+            placeholder={i18next.t("email", { ns: ["labels"] })}
+            labelKey={i18next.t("email", { ns: ["labels"] })}
+            required
           />
 
           {/* _________ PASSWORD _________ */}
           <FormInput
-            labelKey={t("password")}
-            isRequired
             inputProps={{
               ...register("password"),
             }}
             error={!!errors.password}
-            helperText={
-              errors.password?.message &&
-              t(`${errors.password?.message}`, { ns: ["validations"] })
-            }
+            helperText={errors.password?.message}
             fullWidth
             type="password"
             id="password"
-            placeholder={t("password")}
+            labelKey={i18next.t("password", { ns: ["labels"] })}
+            placeholder={i18next.t("password", { ns: ["labels"] })}
+            required
           />
         </AuthForm>
       </Container>

@@ -8,14 +8,16 @@ import { useLangStyle } from "../../hooks/useStyle";
 
 type MUIPhoneNumberInputProps = {
   labelKey: string;
-  value: string;
+  value?: string;
   handleChange: (newPhone: string, info: MuiTelInputInfo) => void;
+  isRequired?: boolean;
 } & TextFieldProps;
 
 const MUIPhoneNumberInput: React.FC<MUIPhoneNumberInputProps> = ({
   labelKey,
   value,
   handleChange,
+  isRequired = false,
   ...textFieldProps
 }) => {
   const { t } = useTranslation();
@@ -44,7 +46,7 @@ const MUIPhoneNumberInput: React.FC<MUIPhoneNumberInputProps> = ({
         <Typography component="span" variant="subtitle2">
           {t(labelKey)}
         </Typography>
-        {restTextFieldProps.required && <sup>*</sup>}
+        {isRequired && <sup>*</sup>}
       </Typography>
       <MuiTelInput
         value={value}

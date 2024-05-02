@@ -1,9 +1,0 @@
-export enum USER_TYPES {
-  ADMINISTRATIVE = "ADMINISTRATIVE",
-  PORTAL = "PORTAL",
-}
-
-export enum USER_STATUS {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
-}
