@@ -1,5 +1,10 @@
 import i18next from "i18next";
-import { deleteData, getData, putData } from "../../../../../api/methods";
+import {
+  deleteData,
+  getData,
+  postData,
+  putData,
+} from "../../../../../api/methods";
 import { GetAllResponseI } from "../../../../../api/types/response.types";
 import { toastSuccess } from "../../../../../shared/components/Toasts";
 import { UserModel } from "../../../../../shared/types/models/User.model";
@@ -40,11 +45,18 @@ const useUsersAPIs = () => {
     if (res.status === 200) toastSuccess(i18next.t("SAVED_SUCCESS"));
   }
 
+  // ADD_USER
+  async function addUser(data: FormData) {
+    const res = await postData(`/users`, data, true);
+    if (res.status === 200) toastSuccess(i18next.t("SAVED_SUCCESS"));
+  }
+
   return {
     getAllUsers,
     deleteUser,
     getUser,
     editUser,
+    addUser,
   };
 };
 

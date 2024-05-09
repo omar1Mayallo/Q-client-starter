@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 import i18next from "i18next";
 import { Controller } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import LoadingButton from "../../../../../../shared/components/Buttons/LoadingButton";
 import FormInput from "../../../../../../shared/components/Inputs/FormInput";
 import MUIPhoneNumberInput from "../../../../../../shared/components/Inputs/MUIPhoneNumberInput";
@@ -17,20 +16,14 @@ import useUploadImage from "../../../../../../shared/hooks/useUploadImage";
 import {
   USER_STATUS,
   USER_TYPE,
-  UserModel,
 } from "../../../../../../shared/types/models/User.model";
-import useEditUser from "../../services/editOne";
-import useEditUserForm, {
-  EditUserFormData,
-} from "../../validations/editUser.validations";
 
-interface UserFormProps {
-  formState: UserModel;
-}
+import useAddUser from "../../services/addOne";
+import useAddUserForm, {
+  AddUserFormData,
+} from "../../validations/addUser.validations";
 
-const UserForm = ({ formState }: UserFormProps) => {
-  const { id } = useParams();
-  const { avatar, ...restState } = formState;
+const UserFormForAdd = () => {
   // FORM_VALIDATION
   const {
     register,
@@ -38,22 +31,21 @@ const UserForm = ({ formState }: UserFormProps) => {
     control,
     setError,
     formState: { errors },
-  } = useEditUserForm(restState);
+  } = useAddUserForm();
 
-  const { ...uploadImgProps } = useUploadImage(avatar);
+  const { ...uploadImgProps } = useUploadImage(null);
 
-  // HANDLE_EDIT_USER
-  const { mutate, isPending } = useEditUser(+id!, setError);
-  const onSubmit = (data: EditUserFormData) => {
+  // HANDLE_ADD_USER
+  const { mutate, isPending } = useAddUser(setError);
+  const onSubmit = (data: AddUserFormData) => {
     const formData = new FormData();
     Object.keys(data).map((key) => {
-      const typedKey = key as keyof EditUserFormData;
-      formData.append(typedKey, data[typedKey]);
+      const typedKey = key as keyof AddUserFormData;
+      formData.append(typedKey, data[typedKey] as string);
       if (typeof data[typedKey] !== "boolean" && !data[typedKey]) {
         formData.delete(`${typedKey}`);
       }
     });
-
     mutate(formData);
   };
 
@@ -80,7 +72,24 @@ const UserForm = ({ formState }: UserFormProps) => {
             }}
           />
         </Grid>
-
+        {/* Password */}
+        <Grid item xs={12} md={6} lg={4}>
+          <FormInput
+            inputProps={{
+              ...register("password"),
+            }}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            labelKey={i18next.t("password")}
+            placeholder={i18next.t("password")}
+            name="password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            isRequired
+            autoComplete="new-password" // Just To Prevent google auto fill
+          />
+        </Grid>
         {/* Email */}
         <Grid item xs={12} md={6} lg={4}>
           <FormInput
@@ -224,11 +233,11 @@ const UserForm = ({ formState }: UserFormProps) => {
           isLoading={isPending}
           fullWidth={false}
           sx={{ minWidth: 130 }}
-          // disabled={!isDirty}
+          // disabled={!isValid}
         />
       </Box>
     </Box>
   );
 };
 
-export default UserForm;
+export default UserFormForAdd;

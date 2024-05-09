@@ -22,19 +22,32 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-type MUIUploadImgInputProps = Omit<useUploadImageResult, "selectedFile"> &
-  FormInputProps;
+type MUIUploadImgInputProps = useUploadImageResult &
+  FormInputProps & { handleFieldChange: (e: unknown) => void };
 const MUIUploadImgInput = ({
   fileInputRef,
   handleUploadImg,
   handleDeleteSelectedImage,
   imagePreviewUrl,
   isLoading,
+  handleFieldChange,
   ...formInputProps
 }: MUIUploadImgInputProps) => {
   return (
     <FormInput
       disabled
+      type="text"
+      variant="outlined"
+      sx={{
+        ...(formInputProps.error && {
+          "& .Mui-disabled .MuiOutlinedInput-notchedOutline": {
+            borderColor: (theme) =>
+              theme.palette.mode === "dark"
+                ? theme.palette.error.dark
+                : theme.palette.error.main,
+          },
+        }),
+      }}
       placeholder={
         isLoading
           ? "Uploading..."
@@ -42,7 +55,6 @@ const MUIUploadImgInput = ({
             ? "\u00A0\u00A0Allowed: jpg, png, jpeg"
             : undefined
       }
-      sx={{ fontSize: "smaller" }}
       InputProps={{
         endAdornment: (
           <Stack direction={"row"} gap={0.5}>
@@ -57,11 +69,18 @@ const MUIUploadImgInput = ({
                 type="file"
                 accept="image/*"
                 ref={fileInputRef}
-                onChange={handleUploadImg}
+                onChange={(e) => {
+                  handleUploadImg(e, handleFieldChange);
+                }}
               />
             </IconButton>
             {imagePreviewUrl && (
-              <IconButton color="error" onClick={handleDeleteSelectedImage}>
+              <IconButton
+                color="error"
+                onClick={() => {
+                  handleDeleteSelectedImage(handleFieldChange);
+                }}
+              >
                 <Delete />
               </IconButton>
             )}

@@ -3,16 +3,17 @@ import { toastError } from "../components/Toasts";
 import { Buffer } from "buffer";
 
 export interface useUploadImageResult {
-  selectedFile: File | null;
   imagePreviewUrl: string | null;
   fileInputRef: MutableRefObject<HTMLInputElement | null>;
-  handleUploadImg: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleDeleteSelectedImage: () => void;
+  handleUploadImg: (
+    e: ChangeEvent<HTMLInputElement>,
+    handleFieldChange: (e: unknown) => void,
+  ) => void;
+  handleDeleteSelectedImage: (handleFieldChange: (e: unknown) => void) => void;
   isLoading: boolean;
 }
 
 const useUploadImage = (defaultImg: Buffer | null): useUploadImageResult => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(
     defaultImg
       ? `data:image/png;base64,${Buffer.from(defaultImg).toString("base64")}`
@@ -22,7 +23,10 @@ const useUploadImage = (defaultImg: Buffer | null): useUploadImageResult => {
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleUploadImg = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadImg = (
+    e: ChangeEvent<HTMLInputElement>,
+    handleFieldChange: (e: unknown) => void,
+  ) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (!file) return;
 
@@ -36,8 +40,8 @@ const useUploadImage = (defaultImg: Buffer | null): useUploadImageResult => {
 
       reader.onload = (event) => {
         setImagePreviewUrl(event.target?.result as string);
-        setSelectedFile(file);
         setIsLoading(false);
+        handleFieldChange(file);
       };
 
       reader.onerror = (error) => {
@@ -49,12 +53,14 @@ const useUploadImage = (defaultImg: Buffer | null): useUploadImageResult => {
     }
   };
 
-  const handleDeleteSelectedImage = () => {
+  const handleDeleteSelectedImage = (
+    handleFieldChange: (e: unknown) => void,
+  ) => {
     if (imagePreviewUrl) {
       URL.revokeObjectURL(imagePreviewUrl);
       setImagePreviewUrl(null);
     }
-    setSelectedFile(null);
+    handleFieldChange(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -62,7 +68,7 @@ const useUploadImage = (defaultImg: Buffer | null): useUploadImageResult => {
 
   return {
     isLoading,
-    selectedFile,
+
     imagePreviewUrl,
     fileInputRef,
     handleUploadImg,

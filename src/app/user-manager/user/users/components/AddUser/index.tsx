@@ -3,7 +3,8 @@ import PageBreadcrumbs from "../../../../../../shared/components/Breadcrumbs/Pag
 import BackButton from "../../../../../../shared/components/Buttons/BackButton";
 import PageHead from "../../../../../../shared/components/Head/PageHead";
 import { addUserBreadcrumbs } from "../../data";
-import UserForm from "../UserForm";
+import { Box, Paper } from "@mui/material";
+import UserFormForAdd from "./UserFormForAdd";
 
 const AddUser = () => {
   return (
@@ -14,7 +15,11 @@ const AddUser = () => {
 
       <BackButton />
 
-      {/* <UserForm /> */}
+      <Box mt={5}>
+        <Paper sx={{ width: "100%" }}>
+          <UserFormForAdd />
+        </Paper>
+      </Box>
     </>
   );
 };

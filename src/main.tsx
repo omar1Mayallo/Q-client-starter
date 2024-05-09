@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./i18n/config.ts";
 import QueryProvider from "./providers/QueryProvider.tsx";
 import NotifyProvider from "./providers/NotifyProvider.tsx";
-import ThemeProvider from "./providers/ThemeProvider.tsx";
+import ThemeProvider from "./providers/ThemeProvider/index.tsx";
 import { BrowserRouter } from "react-router-dom";
 
 import App from "./App.tsx";
