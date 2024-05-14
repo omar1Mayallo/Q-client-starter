@@ -5,17 +5,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import { ThemeTypeE } from "../../../store/theme.store";
-import useSideDrawerStore from "../../store/side-drawer.store";
-import SideListItem from "./components/SideListItem";
-import useSideMenuList from "./hooks/useSideDrawerList";
+import i18next from "i18next";
 import {
   useLangStyle,
   useScreenSizeStyle,
 } from "../../../shared/hooks/useStyle";
-import i18next from "i18next";
 import { LanguagesE } from "../../../store/language.store";
+import useSideDrawerStore from "../../store/side-drawer.store";
+import SideListItem from "./components/SideListItem";
+import useSideMenuList from "./hooks/useSideDrawerList";
 
 const SideDrawer = () => {
   // SIDE_DRAWER_CONFIGS
@@ -78,9 +76,5 @@ const StyledDrawer = styled(MuiDrawer, {
     position: useScreenSizeStyle(undefined, "static"),
     overflowX: "hidden",
     border: "none",
-    backgroundColor:
-      theme.palette.mode === ThemeTypeE.DARK
-        ? grey["900"]
-        : theme.palette.common.white,
   },
 }));

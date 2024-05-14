@@ -2,12 +2,16 @@ import { create } from "zustand";
 import Cookies from "js-cookie";
 
 export enum ThemeTypeE {
-  DARK = "dark",
-  LIGHT = "light",
-  LUXURY = "luxury",
-  HALLOWEEN = "halloween",
-  CUPCAKE = "cupcake",
-  VALENTINE = "valentine",
+  amazonTheme = "amazonTheme",
+  amazonDarkTheme = "amazonDarkTheme",
+  twitterTheme = "twitterTheme",
+  twitterDarkTheme = "twitterDarkTheme",
+  vueLightTheme = "vueLightTheme",
+  vueDarkTheme = "vueDarkTheme",
+  angularLightTheme = "angularLightTheme",
+  angularDarkTheme = "angularDarkTheme",
+  reactLightTheme = "reactLightTheme",
+  reactDarkTheme = "reactDarkTheme",
 }
 
 interface ThemeStateI {
@@ -18,7 +22,9 @@ interface ThemeStateI {
 
 const getStoredThemeType = (): ThemeTypeE => {
   const storedTheme = Cookies.get("themeType");
-  return Object.values(ThemeTypeE).includes(storedTheme as ThemeTypeE) ? storedTheme as ThemeTypeE : ThemeTypeE.LIGHT;
+  return Object.values(ThemeTypeE).includes(storedTheme as ThemeTypeE)
+    ? (storedTheme as ThemeTypeE)
+    : ThemeTypeE.vueLightTheme;
 };
 
 export const useThemeStore = create<ThemeStateI>((set) => ({

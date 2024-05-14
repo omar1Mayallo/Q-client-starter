@@ -22,6 +22,7 @@ import useAddUser from "../../services/addOne";
 import useAddUserForm, {
   AddUserFormData,
 } from "../../validations/addUser.validations";
+import { useEffect } from "react";
 
 const UserFormForAdd = () => {
   // FORM_VALIDATION
@@ -31,9 +32,16 @@ const UserFormForAdd = () => {
     control,
     setError,
     formState: { errors },
+    reset,
   } = useAddUserForm();
 
   const { ...uploadImgProps } = useUploadImage(null);
+
+  // ?Fix?: Reset Form while Toggle Languages to reset errors
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18next.language]);
 
   // HANDLE_ADD_USER
   const { mutate, isPending } = useAddUser(setError);
