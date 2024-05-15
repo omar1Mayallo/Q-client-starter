@@ -1,46 +1,94 @@
-import { DarkMode, LightMode } from "@mui/icons-material";
-import { Box, Button } from "@mui/material";
-import { ThemeTypeE, useThemeStore } from "../../../../../store/theme.store";
-import { useTranslation } from "react-i18next";
 import {
-  useLangStyle,
-  useThemeStyle,
-} from "../../../../../shared/hooks/useStyle";
+  DarkModeOutlined,
+  DarkModeRounded,
+  WbSunnyOutlined,
+  WbSunnyRounded,
+} from "@mui/icons-material";
+import { Stack } from "@mui/material";
+import { useState } from "react";
+import { ThemeTypeE, useThemeStore } from "../../../../../store/theme.store";
+import ThemeButton from "./ThemeButton";
 
-const ThemeToggles = () => {
+const themeButtons = [
+  {
+    themeKey: ThemeTypeE.amazonTheme,
+    IconFilled: WbSunnyRounded,
+    IconOutlined: WbSunnyOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.twitterTheme,
+    IconFilled: WbSunnyRounded,
+    IconOutlined: WbSunnyOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.vueLightTheme,
+    IconFilled: WbSunnyRounded,
+    IconOutlined: WbSunnyOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.angularLightTheme,
+    IconFilled: WbSunnyRounded,
+    IconOutlined: WbSunnyOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.reactLightTheme,
+    IconFilled: WbSunnyRounded,
+    IconOutlined: WbSunnyOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.amazonDarkTheme,
+    IconFilled: DarkModeRounded,
+    IconOutlined: DarkModeOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.twitterDarkTheme,
+    IconFilled: DarkModeRounded,
+    IconOutlined: DarkModeOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.vueDarkTheme,
+    IconFilled: DarkModeRounded,
+    IconOutlined: DarkModeOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.angularDarkTheme,
+    IconFilled: DarkModeRounded,
+    IconOutlined: DarkModeOutlined,
+  },
+  {
+    themeKey: ThemeTypeE.reactDarkTheme,
+    IconFilled: DarkModeRounded,
+    IconOutlined: DarkModeOutlined,
+  },
+];
+
+const ThemeToggles: React.FC = () => {
   const { setTheme } = useThemeStore();
-  const { t } = useTranslation(["layout"]);
-  const handleToggleTheme = (nextTheme: ThemeTypeE) => {
-    setTheme(nextTheme);
+  const [selectedTheme, setSelectedTheme] = useState<ThemeTypeE>(
+    ThemeTypeE.amazonTheme,
+  );
+
+  const handleToggleTheme = (themeName: ThemeTypeE) => {
+    setSelectedTheme(themeName);
+    setTheme(themeName);
   };
 
   return (
-    <Box className="flex">
-      <Button
-        sx={{
-          borderRadius: useLangStyle("0px 22px 22px 0px", "22px 0px 0px 22px"),
-          gap: useLangStyle(1, 0),
-        }}
-        fullWidth
-        onClick={() => handleToggleTheme(ThemeTypeE.DARK)}
-        variant={useThemeStyle("outlined", "contained")}
-        startIcon={<DarkMode />}
-      >
-        {t("DARK")}
-      </Button>
-      <Button
-        sx={{
-          borderRadius: useLangStyle("22px 0px 0px 22px", "0px 22px 22px 0px"),
-          gap: useLangStyle(1, 0),
-        }}
-        fullWidth
-        onClick={() => handleToggleTheme(ThemeTypeE.LIGHT)}
-        variant={useThemeStyle("contained", "outlined")}
-        startIcon={<LightMode />}
-      >
-        {t("LIGHT")}
-      </Button>
-    </Box>
+    <Stack
+      direction="row"
+      gap={1}
+      justifyContent="space-between"
+      flexWrap="wrap"
+    >
+      {themeButtons.map((props) => (
+        <ThemeButton
+          key={props.themeKey}
+          {...props}
+          selectedTheme={selectedTheme}
+          onSelectTheme={handleToggleTheme}
+        />
+      ))}
+    </Stack>
   );
 };
 

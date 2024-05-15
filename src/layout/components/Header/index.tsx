@@ -5,7 +5,6 @@ import { useLangStyle } from "../../../shared/hooks/useStyle";
 import useSideDrawerStore from "../../store/side-drawer.store";
 import LangIcon from "./components/LangIcon";
 import NotificationIconDropdown from "./components/NotificationIconDropdown";
-import ThemeIcon from "./components/ThemeIcon";
 import UserIconDropdown from "./components/UserIconDropdown";
 
 export default function Header() {
@@ -47,8 +46,6 @@ export default function Header() {
           <Stack direction={useLangStyle("row-reverse", "row")} gap={2}>
             {/* I18N_ICON */}
             <LangIcon />
-            {/* THEME_ICON */}
-            <ThemeIcon />
             {/* NOTIFICATIONS_ICON_DROPDOWN */}
             <NotificationIconDropdown />
             {/* USER_ICON_DROPDOWN */}

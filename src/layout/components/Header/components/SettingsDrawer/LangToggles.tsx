@@ -15,7 +15,7 @@ const LanguageToggles = () => {
     <Box className="flex">
       <Button
         sx={{
-          borderRadius: useLangStyle("0px 22px 22px 0px", "22px 0px 0px 22px"),
+          borderRadius: useLangStyle("0px 5px 5px 0px", "5px 0px 0px 5px"),
         }}
         fullWidth
         onClick={() => handleToggleLang(LanguagesE.EN)}
@@ -25,7 +25,7 @@ const LanguageToggles = () => {
       </Button>
       <Button
         sx={{
-          borderRadius: useLangStyle("22px 0px 0px 22px", "0px 22px 22px 0px"),
+          borderRadius: useLangStyle("5px 0px 0px 5px", "0px 5px 5px 0px"),
         }}
         fullWidth
         onClick={() => handleToggleLang(LanguagesE.AR)}
