@@ -5,6 +5,7 @@ import PageHead from "../../../../../../shared/components/Head/PageHead";
 import { addUserBreadcrumbs } from "../../data";
 import { Box, Paper } from "@mui/material";
 import UserFormForAdd from "./UserFormForAdd";
+import withPageGuard from "../../../../../../shared/components/Routes/withPageGuard";
 
 const AddUser = () => {
   return (
@@ -24,4 +25,5 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+const GuardedAddUser = withPageGuard(AddUser, "users", "create");
+export default GuardedAddUser;

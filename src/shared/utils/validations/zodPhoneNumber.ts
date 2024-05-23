@@ -1,6 +1,5 @@
 import { isValidPhoneNumber, parsePhoneNumber } from "libphonenumber-js";
 import { string } from "zod";
-import { translateValidationErrors } from "../../helpers/factory";
 
 const zodPhoneNumber = ({
   optional = true,
@@ -8,7 +7,10 @@ const zodPhoneNumber = ({
 } = {}) =>
   (optional
     ? string().optional().nullable()
-    : string({ invalid_type_error: translateValidationErrors("REQUIRED") })
+    : string({
+        invalid_type_error: "PHONE_REQUIRED",
+        required_error: "PHONE_REQUIRED",
+      })
   ).refine(
     (value) => {
       try {

@@ -16,6 +16,7 @@ export interface GetAllUsersParams {
   sort?: string;
   status?: string;
   type?: string;
+  fields: string;
 }
 
 const useUsersAPIs = () => {

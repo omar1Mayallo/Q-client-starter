@@ -7,7 +7,7 @@ import PageHead from "../../../../../../shared/components/Head/PageHead";
 import FormSkeleton from "../../../../../../shared/components/Loaders/FormSkeleton";
 import { userDetailsBreadcrumbs } from "../../data";
 import useGetUser from "../../services/getOne";
-import UserForm from "../UserForm";
+import UserFormForEdit from "./UserFormForEdit";
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -32,7 +32,7 @@ const UserDetails = () => {
                 i18next.t("SOMETHING_WENT_WRONG")}
             </Alert>
           ) : (
-            isSuccess && <UserForm formState={data} />
+            isSuccess && <UserFormForEdit formState={data} />
           )}
         </Paper>
       </Box>

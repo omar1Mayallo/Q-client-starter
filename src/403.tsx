@@ -2,7 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Container, Typography, Button, Box } from "@mui/material";
 
-const NotFound: React.FC = () => {
+const UnAuthorized: React.FC = () => {
   return (
     <Container
       component="main"
@@ -11,10 +11,10 @@ const NotFound: React.FC = () => {
     >
       <Box sx={{ mt: 8 }}>
         <Typography variant="h3" component="h1" gutterBottom>
-          404 - Page Not Found
+          403 - Unauthorized Access
         </Typography>
         <Typography variant="h6" component="p" gutterBottom>
-          Sorry, the page you are looking for does not exist.
+          You do not have permission to view this page.
         </Typography>
         <Button
           component={RouterLink}
@@ -30,4 +30,4 @@ const NotFound: React.FC = () => {
   );
 };
 
-export default NotFound;
+export default UnAuthorized;

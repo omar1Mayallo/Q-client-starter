@@ -12,6 +12,7 @@ import { TableHeadCell } from "../../../../../../../shared/types/Interfaces/Tabl
 import { UserModel } from "../../../../../../../shared/types/models/User.model";
 import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
 import { useLangStyle } from "../../../../../../../shared/hooks/useStyle";
+import { isEmpty } from "../../../../../../../shared/helpers/checks";
 
 export interface TableHeaderProps {
   headCells: TableHeadCell<UserModel>[];
@@ -27,7 +28,7 @@ export default function TableHeader({
   onSelectAllClick,
 }: TableHeaderProps) {
   const { sort, handleSort } = useGetAllUsersParamsStore();
-  const { isHaveNotDeleteAction } = useUserActions("users");
+  const { tableActions, isHaveNotDeleteAction } = useUserActions("users");
 
   const cellDir = useLangStyle("ltr", "rtl");
   return (
@@ -45,33 +46,38 @@ export default function TableHeader({
         </TableCell>
 
         {/* REST_TABLES_HEAD_CELLS */}
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id as Key}
-            align={headCell.numeric ? "center" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
-            dir={cellDir}
-          >
-            <TableSortLabel
-              active={sort.replace(/-/g, "") === headCell.id}
-              onClick={() => handleSort(headCell.id as string)}
-              disabled={!headCell.sortable}
-              IconComponent={() =>
-                headCell.sortable ? (
-                  <SortIcons
-                    activeAsc={!sort.startsWith("-")}
-                    activeDesc={sort.startsWith("-")}
-                    disabled={sort.replace(/-/g, "") !== headCell.id}
-                  />
-                ) : (
-                  <></>
-                )
-              }
+        {headCells.map((headCell) => {
+          if (isEmpty(tableActions) && headCell.id === "actions") {
+            return null;
+          }
+          return (
+            <TableCell
+              key={headCell.id as Key}
+              align={headCell.numeric ? "center" : "left"}
+              padding={headCell.disablePadding ? "none" : "normal"}
+              dir={cellDir}
             >
-              {headCell.label}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+              <TableSortLabel
+                active={sort.replace(/-/g, "") === headCell.id}
+                onClick={() => handleSort(headCell.id as string)}
+                disabled={!headCell.sortable}
+                IconComponent={() =>
+                  headCell.sortable ? (
+                    <SortIcons
+                      activeAsc={!sort.startsWith("-")}
+                      activeDesc={sort.startsWith("-")}
+                      disabled={sort.replace(/-/g, "") !== headCell.id}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+              >
+                {headCell.label}
+              </TableSortLabel>
+            </TableCell>
+          );
+        })}
       </TableRow>
     </MuiTableHead>
   );

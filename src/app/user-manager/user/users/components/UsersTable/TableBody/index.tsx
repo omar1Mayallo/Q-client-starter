@@ -14,17 +14,20 @@ import useFactoryActions from "../../../hooks/useFactoryActions";
 import useDeleteUsers from "../../../services/delete";
 import { getStatusColor } from "../../../../../../../shared/helpers/factory";
 import { formatToRegularString } from "../../../../../../../shared/helpers/formats";
+import { isEmpty } from "../../../../../../../shared/helpers/checks";
 
 interface TableBodyProps {
   data: UserModel[];
   isSelected: (id: number) => boolean;
   handleClick: (id: number) => void;
+  selected: number[];
 }
 
 const TableBody: React.FC<TableBodyProps> = ({
   data,
   isSelected,
   handleClick,
+  selected,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -70,7 +73,6 @@ const TableBody: React.FC<TableBodyProps> = ({
       <MUITableBody>
         {data.map((row) => {
           const isItemSelected = isSelected(row.id);
-
           return (
             <TableRow
               hover
@@ -117,9 +119,15 @@ const TableBody: React.FC<TableBodyProps> = ({
                 />
               </TableCell>
               <TableCell align="center">{`${row.created_at}`}</TableCell>
-              <TableCell align="center">
-                <TableRowActions actionsItems={actionsItems!} id={row.id} />
-              </TableCell>
+              {isEmpty(actionsItems) || (
+                <TableCell align="center">
+                  <TableRowActions
+                    actionsItems={actionsItems!}
+                    id={row.id}
+                    selected={selected}
+                  />
+                </TableCell>
+              )}
             </TableRow>
           );
         })}

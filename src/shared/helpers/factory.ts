@@ -18,7 +18,7 @@ export type MuiColorsT =
  * @param {STATUS} status - The status enum value.
  * @returns {MuiColorsT} The corresponding Material UI color.
  */
-export const getStatusColor = (status: STATUS): MuiColorsT => {
+export const getStatusColor = (status: string): MuiColorsT => {
   const { ACTIVE, INACTIVE } = STATUS;
   switch (status) {
     case ACTIVE:
@@ -38,11 +38,15 @@ export const getStatusColor = (status: STATUS): MuiColorsT => {
  * @returns Translated validation error message.
  */
 export function translateValidationErrors(
-  translateKey: string,
+  translateKey: string | undefined,
   restOptions?: object,
-): string {
-  return i18next.t(translateKey, {
-    ns: "validations",
-    ...(restOptions || {}),
-  });
+): string | undefined {
+  if (translateKey) {
+    return i18next.t(translateKey, {
+      ns: "validations",
+      ...(restOptions || {}),
+    });
+  } else {
+    return undefined;
+  }
 }

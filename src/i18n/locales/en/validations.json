@@ -6,6 +6,10 @@
   "USERNAME_REGEX": "Invalid username format. It should only contain letters, numbers, underscores, and Arabic characters, and be between 3 and 30 characters long",
   "USERNAME_REQUIRED": "Username is required",
   "INVALID_PHONE": "Invalid phone number",
+  "PHONE_REQUIRED": "Phone number is required",
   "STATUS_REQUIRED": "Status is required",
-  "USER_TYPE_REQUIRED": "User type is required"
+  "USER_TYPE_REQUIRED": "User type is required",
+  "AVATAR_REQUIRED": "Avatar is required",
+  "PASSWORDS_NOT_MATCHES": "Passwords do not match",
+  "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password"
 }

@@ -1,7 +1,8 @@
+import HomeIcon from "@mui/icons-material/Home";
 import { Breadcrumbs, Divider, Link, Stack, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { Link as RouterLink } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
+import withPageGuard from "../../shared/components/Routes/withPageGuard";
 
 const Dashboard = () => {
   return (
@@ -33,10 +34,9 @@ const Dashboard = () => {
           </Breadcrumbs>
         </Stack>
       </Stack>
-
-      {/* <EnhancedTable /> */}
     </>
   );
 };
 
-export default Dashboard;
+const GuardedDashboard = withPageGuard(Dashboard, "dashboard");
+export default GuardedDashboard;

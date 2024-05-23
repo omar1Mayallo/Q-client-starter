@@ -23,6 +23,9 @@ export default function useAddUser(setError: UseFormSetError<AddUserFormData>) {
       queryClient.invalidateQueries({
         queryKey: [
           "users",
+          {
+            fields: "id,email,username,type,status,phone,created_at,updated_at",
+          },
           { page: pagination.page },
           { limit: pagination.limit },
           { search },

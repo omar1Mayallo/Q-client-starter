@@ -17,6 +17,7 @@ export default function useGetAllUsers() {
   return useQuery<GetAllResponseI<UserModel>, AxiosError<ResponseErrorsI>>({
     queryKey: [
       "users",
+      { fields: "id,email,username,type,status,phone,created_at,updated_at" },
       { page: pagination.page },
       { limit: pagination.limit },
       { search },
@@ -26,6 +27,7 @@ export default function useGetAllUsers() {
     ],
     queryFn: () =>
       getAllUsers({
+        fields: "id,email,username,type,status,phone,created_at,updated_at",
         page: pagination.page,
         limit: pagination.limit,
         ...(search && { search: `[username,email]:${search}` }),

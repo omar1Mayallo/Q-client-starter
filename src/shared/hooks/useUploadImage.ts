@@ -1,13 +1,6 @@
-import {
-  useState,
-  useRef,
-  ChangeEvent,
-  MutableRefObject,
-  useEffect,
-} from "react";
-import { toastError } from "../components/Toasts";
 import { Buffer } from "buffer";
-import i18next from "i18next";
+import { ChangeEvent, MutableRefObject, useRef, useState } from "react";
+import { toastError } from "../components/Toasts";
 
 export interface useUploadImageResult {
   imagePreviewUrl: string | null;
@@ -26,12 +19,6 @@ const useUploadImage = (defaultImg: Buffer | null): useUploadImageResult => {
       ? `data:image/png;base64,${Buffer.from(defaultImg).toString("base64")}`
       : null,
   );
-
-  // ?FIX?: To Handle remove the preview image while reset form in changing language
-  useEffect(() => {
-    setImagePreviewUrl(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18next.language]);
 
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -81,7 +68,6 @@ const useUploadImage = (defaultImg: Buffer | null): useUploadImageResult => {
 
   return {
     isLoading,
-
     imagePreviewUrl,
     fileInputRef,
     handleUploadImg,

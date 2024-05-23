@@ -5,12 +5,15 @@ import NotFound from "./404";
 import Login from "./app/authentication/pages/login";
 import useLoginAPIs from "./app/authentication/pages/login/api/login.api";
 import Register from "./app/authentication/pages/register";
-
+import UnAuthorized from "./403";
+import Customers from "./app/customers-management/customers";
+import Subscriptions from "./app/customers-management/subscriptions";
 import Dashboard from "./app/dashboard";
 import Dues from "./app/financial-services/billing-manager/dues";
 import Invoices from "./app/financial-services/billing-manager/invoices";
 import Payments from "./app/financial-services/billing-manager/payments";
 import Plans from "./app/financial-services/plans";
+import Settings from "./app/settings";
 import Groups from "./app/user-manager/group";
 import useGetUserPermissions, {
   useGetUserActions,
@@ -23,29 +26,18 @@ import FullAppLoading from "./shared/components/Loaders/FullAppLoading";
 import ProtectedRoutes from "./shared/components/Routes/ProtectedRoutes";
 import PublicRoutes from "./shared/components/Routes/PublicRoutes";
 import { toastError } from "./shared/components/Toasts";
-import Settings from "./app/settings";
-import Customers from "./app/customers-management/customers";
-import Subscriptions from "./app/customers-management/subscriptions";
 
 function App() {
   const {
-    data: permissions,
+    data,
     isLoading: isLoadingPermissions,
     isError: isErrorPermissions,
   } = useGetUserPermissions();
   const { isLoading: isLoadingActions, isError: isErrorActions } =
     useGetUserActions();
+
   const { logout } = useLoginAPIs();
   const { t } = useTranslation();
-
-  const firstPermissionsItem =
-    permissions?.entities && permissions?.entities[0];
-  const firstEntityUrl = firstPermissionsItem?.entity_url;
-  const firstModuleEntityUrl =
-    firstPermissionsItem?.entities &&
-    firstPermissionsItem?.entities[0]?.entity_url;
-  const redirectPath: string = firstEntityUrl || firstModuleEntityUrl;
-
   useEffect(() => {
     if (isErrorPermissions || isErrorActions) {
       toastError(t("USER_PERMISSIONS_ERROR"));
@@ -60,10 +52,7 @@ function App() {
         <FullAppLoading />
       ) : (
         <Routes>
-          <Route
-            path="/"
-            element={<PublicRoutes redirectPath={redirectPath} />}
-          >
+          <Route path="/" element={<PublicRoutes entities={data?.entities} />}>
             <Route index element={<Navigate to={"/login"} />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
@@ -107,6 +96,8 @@ function App() {
                 <Route index element={<Subscriptions />} />
               </Route>
             </Route>
+
+            <Route path="/unauthorized" element={<UnAuthorized />} />
           </Route>
 
           <Route element={<ProtectedRoutes />}>

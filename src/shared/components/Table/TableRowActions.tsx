@@ -3,6 +3,7 @@ import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import IconButtonTooltip from "../Buttons/IconButtonTooltip";
 import useDropDownMenu from "../../hooks/useDropDownMenu";
 import { IActionsConfig } from "../../actions";
+import i18next from "i18next";
 
 export interface ActionItems extends IActionsConfig {
   handler: (id: number) => void;
@@ -11,9 +12,14 @@ export interface ActionItems extends IActionsConfig {
 export interface TableRowActionsProps {
   id: number;
   actionsItems: ActionItems[];
+  selected: number[];
 }
 
-const TableRowActions = ({ id, actionsItems }: TableRowActionsProps) => {
+const TableRowActions = ({
+  id,
+  actionsItems,
+  selected,
+}: TableRowActionsProps) => {
   const { anchorEl, open, handleClick, handleClose } = useDropDownMenu();
 
   return (
@@ -37,15 +43,21 @@ const TableRowActions = ({ id, actionsItems }: TableRowActionsProps) => {
         >
           {actionsItems?.map(({ actionName, Icon, handler }, index) => (
             <MenuItem
-              key={actionName}
+              key={index}
               divider={index !== actionsItems.length - 1}
               sx={{ py: 1.1 }}
-              onClick={() => handler(id)}
+              onClick={() => {
+                handler(id);
+                // handleClose();
+              }}
+              disabled={actionName === "Delete" && !!selected.length}
             >
               <ListItemIcon>
                 <Icon fontSize="medium" />
               </ListItemIcon>
-              <ListItemText>{actionName}</ListItemText>
+              <ListItemText>
+                {i18next.t(actionName, { ns: "labels" })}
+              </ListItemText>
             </MenuItem>
           ))}
         </Menu>

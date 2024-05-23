@@ -12,10 +12,10 @@ export default function useGetUserPermissions() {
   return useQuery<any, AxiosError<ResponseErrorsI>>({
     queryKey: [CACHED_KEYS.LOGGED_USER_PERMISSIONS],
     queryFn: getLoggedUserPermissions,
+    placeholderData: userPermissions,
     enabled: !!token, // Just trigger if user authenticated
     // staleTime: Infinity, // Consider as Fresh Forever
-    placeholderData: userPermissions,
-    refetchInterval: 60000 / 6, // Refetch every 1 minute
+    refetchInterval: 5000, // Refetch every 5 seconds
   });
 }
 
@@ -25,9 +25,9 @@ export function useGetUserActions() {
   return useQuery<string[], AxiosError<ResponseErrorsI>>({
     queryKey: [CACHED_KEYS.LOGGED_USER_ACTIONS],
     queryFn: getLoggedUserActions,
+    placeholderData: userActions,
     enabled: !!token, // Just trigger if user authenticated
     // staleTime: Infinity, // Consider as Fresh Forever
-    placeholderData: userActions,
-    refetchInterval: 60000 / 6, // Refetch every 1 minute
+    refetchInterval: 5000, // Refetch every 5 seconds
   });
 }

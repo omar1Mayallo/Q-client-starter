@@ -23,12 +23,13 @@ import useEditUser from "../../services/editOne";
 import useEditUserForm, {
   EditUserFormData,
 } from "../../validations/editUser.validations";
+import { translateValidationErrors } from "../../../../../../shared/helpers/factory";
 
-interface UserFormProps {
+interface UserFormForEditProps {
   formState: UserModel;
 }
 
-const UserForm = ({ formState }: UserFormProps) => {
+const UserFormForEdit = ({ formState }: UserFormForEditProps) => {
   const { id } = useParams();
   const { avatar, ...restState } = formState;
   // FORM_VALIDATION
@@ -48,12 +49,11 @@ const UserForm = ({ formState }: UserFormProps) => {
     const formData = new FormData();
     Object.keys(data).map((key) => {
       const typedKey = key as keyof EditUserFormData;
-      formData.append(typedKey, data[typedKey]);
+      formData.append(typedKey, data[typedKey] as string);
       if (typeof data[typedKey] !== "boolean" && !data[typedKey]) {
         formData.delete(`${typedKey}`);
       }
     });
-
     mutate(formData);
   };
 
@@ -74,13 +74,14 @@ const UserForm = ({ formState }: UserFormProps) => {
                   fullWidth
                   isRequired
                   error={Boolean(fieldState.error)}
-                  helperText={fieldState.error?.message}
+                  helperText={translateValidationErrors(
+                    fieldState.error?.message,
+                  )}
                 />
               );
             }}
           />
         </Grid>
-
         {/* Email */}
         <Grid item xs={12} md={6} lg={4}>
           <FormInput
@@ -88,7 +89,7 @@ const UserForm = ({ formState }: UserFormProps) => {
               ...register("email"),
             }}
             error={!!errors.email}
-            helperText={errors.email?.message}
+            helperText={translateValidationErrors(errors.email?.message)}
             labelKey={i18next.t("email")}
             placeholder={i18next.t("email")}
             name="email"
@@ -98,7 +99,6 @@ const UserForm = ({ formState }: UserFormProps) => {
             isRequired
           />
         </Grid>
-
         {/* Username */}
         <Grid item xs={12} md={6} lg={4}>
           <FormInput
@@ -106,7 +106,7 @@ const UserForm = ({ formState }: UserFormProps) => {
               ...register("username"),
             }}
             error={!!errors.username}
-            helperText={errors.username?.message}
+            helperText={translateValidationErrors(errors.username?.message)}
             labelKey={i18next.t("username")}
             placeholder={i18next.t("username")}
             name="username"
@@ -116,7 +116,6 @@ const UserForm = ({ formState }: UserFormProps) => {
             isRequired
           />
         </Grid>
-
         {/* Type */}
         <Grid item xs={12} md={6} lg={4}>
           <Controller
@@ -139,7 +138,7 @@ const UserForm = ({ formState }: UserFormProps) => {
                       placeholder={i18next.t("type")}
                       isRequired
                       error={invalid}
-                      helperText={error?.message}
+                      helperText={translateValidationErrors(error?.message)}
                     />
                   )}
                 />
@@ -147,7 +146,6 @@ const UserForm = ({ formState }: UserFormProps) => {
             }}
           />
         </Grid>
-
         {/* Phone */}
         <Grid item xs={12} md={6} lg={4}>
           <Controller
@@ -167,12 +165,11 @@ const UserForm = ({ formState }: UserFormProps) => {
                 placeholder={i18next.t("phone")}
                 isRequired
                 error={invalid}
-                helperText={error?.message}
+                helperText={translateValidationErrors(error?.message)}
               />
             )}
           />
         </Grid>
-
         {/* Switches */}
         <Grid item xs={12} md={6} lg={4} className="flex flex-row gap-2">
           <Controller
@@ -231,4 +228,4 @@ const UserForm = ({ formState }: UserFormProps) => {
   );
 };
 
-export default UserForm;
+export default UserFormForEdit;

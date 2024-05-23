@@ -2,10 +2,12 @@
   "username": "Username",
   "email": "Email",
   "password": "Password",
+  "confirmPassword": "Confirm Password",
   "login_with_otp": "Login with OTP",
   "loading": "Loading",
   "phone": "Phone Number",
   "roles": "Roles",
+  "avatar": "Avatar",
 
   "id": "ID",
   "name": "Name",

@@ -105,7 +105,7 @@ export const userTypes = [
   { label: "Administrative", value: USER_TYPE.ADMINISTRATIVE },
   { label: "Portal", value: USER_TYPE.PORTAL },
 ];
-// _USER_TYPES_OPTIONS
+// _USER_STATUS_OPTIONS
 export const userStatus = [
   { label: "Active", value: USER_STATUS.ACTIVE },
   { label: "In Active", value: USER_STATUS.INACTIVE },

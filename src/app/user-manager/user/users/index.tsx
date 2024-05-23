@@ -6,6 +6,7 @@ import TableError from "../../../../shared/components/Table/TableError";
 import UsersTable from "./components/UsersTable";
 import { userBreadcrumbs } from "./data";
 import useGetAllUsers from "./services/getAll";
+import withPageGuard from "../../../../shared/components/Routes/withPageGuard";
 
 const Users = () => {
   const { data, isSuccess, isLoading, isError, error } = useGetAllUsers();
@@ -34,4 +35,5 @@ const Users = () => {
   );
 };
 
-export default Users;
+const GuardedUsers = withPageGuard(Users, "users");
+export default GuardedUsers;

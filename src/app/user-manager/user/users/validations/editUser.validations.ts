@@ -1,6 +1,5 @@
 import * as z from "zod";
 import { USERNAME_REGEX } from "../../../../../shared/constants/regex";
-import { translateValidationErrors } from "../../../../../shared/helpers/factory";
 import useFormValidation from "../../../../../shared/hooks/useFormValidation";
 import {
   USER_STATUS,
@@ -13,29 +12,25 @@ import zodPhoneNumber from "../../../../../shared/utils/validations/zodPhoneNumb
 const editUserSchema = z.object({
   username: z
     .string()
-    .min(1, translateValidationErrors("USERNAME_REQUIRED"))
-    .regex(USERNAME_REGEX, translateValidationErrors("USERNAME_REGEX")),
-  email: z
-    .string()
-    .min(1, translateValidationErrors("EMAIL_REQUIRED"))
-    .email(translateValidationErrors("INVALID_EMAIL")),
-  // password: z
-  //   .string()
-  //   .min(1, translateValidationErrors("PASSWORD_REQUIRED"))
-  //   .regex(PASSWORD_REGEX, translateValidationErrors("PASSWORD_REGEX")),
+    .min(1, "USERNAME_REQUIRED")
+    .regex(USERNAME_REGEX, "USERNAME_REGEX"),
+  email: z.string().min(1, "EMAIL_REQUIRED").email("INVALID_EMAIL"),
   phone: zodPhoneNumber({
-    message: translateValidationErrors("INVALID_PHONE"),
+    message: "INVALID_PHONE",
   }),
   status: z
     .nativeEnum(USER_STATUS, {
-      invalid_type_error: translateValidationErrors("STATUS_REQUIRED"),
+      invalid_type_error: "STATUS_REQUIRED",
     })
     .default(USER_STATUS.INACTIVE),
   type: z.nativeEnum(USER_TYPE, {
-    invalid_type_error: translateValidationErrors("USER_TYPE_REQUIRED"),
+    invalid_type_error: "USER_TYPE_REQUIRED",
+    required_error: "USER_TYPE_REQUIRED",
   }),
   login_with_otp: z.boolean().optional().default(false),
-  avatar: z.any().optional().default(false),
+  avatar: z.instanceof(File, {
+    message: "AVATAR_REQUIRED",
+  }),
 });
 
 // EDIT USER SCHEMA OBJECT TYPE

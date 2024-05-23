@@ -8,11 +8,11 @@ export interface IActionsConfig {
 
 const ActionsConfig: Record<string, IActionsConfig> = {
   update: {
-    actionName: "Edit",
+    actionName: "edit",
     Icon: Edit,
   },
   delete: {
-    actionName: "Delete",
+    actionName: "delete",
     Icon: Delete,
   },
   permissions: {

@@ -1,11 +1,14 @@
 import React from "react";
 
 export default function useSelectRows<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends { id: number; [key: string]: any },
 >(data: T[]) {
   const [selected, setSelected] = React.useState<number[]>([]);
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
+  const handleSelectAllClick = (
+    event?: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (event?.target.checked) {
       const newSelected = data.map((n) => n.id)!;
       setSelected(newSelected);
       return;

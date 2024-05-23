@@ -63,10 +63,8 @@ const themeButtons = [
 ];
 
 const ThemeToggles: React.FC = () => {
-  const { setTheme } = useThemeStore();
-  const [selectedTheme, setSelectedTheme] = useState<ThemeTypeE>(
-    ThemeTypeE.amazonTheme,
-  );
+  const { setTheme, themeType } = useThemeStore();
+  const [selectedTheme, setSelectedTheme] = useState<ThemeTypeE>(themeType);
 
   const handleToggleTheme = (themeName: ThemeTypeE) => {
     setSelectedTheme(themeName);

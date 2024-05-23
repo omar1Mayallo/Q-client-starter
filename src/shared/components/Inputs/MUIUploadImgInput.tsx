@@ -9,6 +9,7 @@ import {
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { useUploadImageResult } from "../../hooks/useUploadImage";
 import FormInput, { FormInputProps } from "./FormInput";
+import { red } from "@mui/material/colors";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -41,10 +42,7 @@ const MUIUploadImgInput = ({
       sx={{
         ...(formInputProps.error && {
           "& .Mui-disabled .MuiOutlinedInput-notchedOutline": {
-            borderColor: (theme) =>
-              theme.palette.mode === "dark"
-                ? theme.palette.error.dark
-                : theme.palette.error.main,
+            borderColor: red[700],
           },
         }),
       }}

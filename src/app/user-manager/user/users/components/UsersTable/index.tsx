@@ -27,8 +27,10 @@ const UsersTable = ({
       <TableIconButtons />
       <Paper sx={{ width: "100%" }}>
         {/* TABLE_SEARCH_FILTERS */}
-        <TableSearchFilters selected={selected} />
-
+        <TableSearchFilters
+          selected={selected}
+          handleSelectAllClick={handleSelectAllClick}
+        />
         {/* TABLE_CONTENT */}
         <TableContainer>
           <MuiTable
@@ -43,13 +45,13 @@ const UsersTable = ({
               rowCount={usersData.length}
               headCells={usersHeadCells(i18next.t)}
             />
-
             {/* TABLE_BODY */}
             {usersData.length > 0 && (
               <TableBody
                 data={usersData}
                 isSelected={isSelected}
                 handleClick={handleClick}
+                selected={selected}
               />
             )}
           </MuiTable>

@@ -18,11 +18,12 @@ import {
   USER_TYPE,
 } from "../../../../../../shared/types/models/User.model";
 
+import PasswordInput from "../../../../../../shared/components/Inputs/PasswordInput";
+import { translateValidationErrors } from "../../../../../../shared/helpers/factory";
 import useAddUser from "../../services/addOne";
 import useAddUserForm, {
   AddUserFormData,
 } from "../../validations/addUser.validations";
-import { useEffect } from "react";
 
 const UserFormForAdd = () => {
   // FORM_VALIDATION
@@ -32,25 +33,20 @@ const UserFormForAdd = () => {
     control,
     setError,
     formState: { errors },
-    reset,
   } = useAddUserForm();
 
   const { ...uploadImgProps } = useUploadImage(null);
 
-  // ?Fix?: Reset Form while Toggle Languages to reset errors
-  useEffect(() => {
-    reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18next.language]);
-
   // HANDLE_ADD_USER
   const { mutate, isPending } = useAddUser(setError);
   const onSubmit = (data: AddUserFormData) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirmPassword, ...userData } = data;
     const formData = new FormData();
-    Object.keys(data).map((key) => {
-      const typedKey = key as keyof AddUserFormData;
-      formData.append(typedKey, data[typedKey] as string);
-      if (typeof data[typedKey] !== "boolean" && !data[typedKey]) {
+    Object.keys(userData).map((key) => {
+      const typedKey = key as keyof Omit<AddUserFormData, "confirmPassword">;
+      formData.append(typedKey, userData[typedKey] as string);
+      if (typeof userData[typedKey] !== "boolean" && !userData[typedKey]) {
         formData.delete(`${typedKey}`);
       }
     });
@@ -60,62 +56,6 @@ const UserFormForAdd = () => {
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate p={3}>
       <Grid container columnSpacing={3} rowSpacing={2}>
-        {/* Avatar */}
-        <Grid item xs={12} md={6} lg={4}>
-          <Controller
-            name="avatar"
-            control={control}
-            render={({ field, fieldState }) => {
-              return (
-                <MUIUploadImgInput
-                  {...uploadImgProps}
-                  handleFieldChange={field.onChange}
-                  labelKey={i18next.t("Avatar")}
-                  fullWidth
-                  isRequired
-                  error={Boolean(fieldState.error)}
-                  helperText={fieldState.error?.message}
-                />
-              );
-            }}
-          />
-        </Grid>
-        {/* Password */}
-        <Grid item xs={12} md={6} lg={4}>
-          <FormInput
-            inputProps={{
-              ...register("password"),
-            }}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-            labelKey={i18next.t("password")}
-            placeholder={i18next.t("password")}
-            name="password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            isRequired
-            autoComplete="new-password" // Just To Prevent google auto fill
-          />
-        </Grid>
-        {/* Email */}
-        <Grid item xs={12} md={6} lg={4}>
-          <FormInput
-            inputProps={{
-              ...register("email"),
-            }}
-            error={!!errors.email}
-            helperText={errors.email?.message}
-            labelKey={i18next.t("email")}
-            placeholder={i18next.t("email")}
-            name="email"
-            type="email"
-            variant="outlined"
-            fullWidth
-            isRequired
-          />
-        </Grid>
-
         {/* Username */}
         <Grid item xs={12} md={6} lg={4}>
           <FormInput
@@ -123,7 +63,7 @@ const UserFormForAdd = () => {
               ...register("username"),
             }}
             error={!!errors.username}
-            helperText={errors.username?.message}
+            helperText={translateValidationErrors(errors.username?.message)}
             labelKey={i18next.t("username")}
             placeholder={i18next.t("username")}
             name="username"
@@ -133,7 +73,81 @@ const UserFormForAdd = () => {
             isRequired
           />
         </Grid>
-
+        {/* Email */}
+        <Grid item xs={12} md={6} lg={4}>
+          <FormInput
+            inputProps={{
+              ...register("email"),
+            }}
+            error={!!errors.email}
+            helperText={translateValidationErrors(errors.email?.message)}
+            labelKey={i18next.t("email")}
+            placeholder={i18next.t("email")}
+            name="email"
+            type="email"
+            variant="outlined"
+            fullWidth
+            isRequired
+          />
+        </Grid>
+        {/* Password */}
+        <Grid item xs={12} md={6} lg={4}>
+          <PasswordInput
+            inputProps={{
+              ...register("password"),
+            }}
+            error={!!errors.password}
+            helperText={translateValidationErrors(errors.password?.message)}
+            labelKey={i18next.t("password")}
+            placeholder={i18next.t("password")}
+            name="password"
+            variant="outlined"
+            fullWidth
+            isRequired
+          />
+        </Grid>
+        {/* Confirm Password */}
+        <Grid item xs={12} md={6} lg={4}>
+          <PasswordInput
+            inputProps={{
+              ...register("confirmPassword"),
+            }}
+            error={!!errors.confirmPassword}
+            helperText={translateValidationErrors(
+              errors.confirmPassword?.message,
+            )}
+            labelKey={i18next.t("confirmPassword")}
+            placeholder={i18next.t("confirmPassword")}
+            name="confirmPassword"
+            variant="outlined"
+            fullWidth
+            isRequired
+          />
+        </Grid>
+        {/* Phone */}
+        <Grid item xs={12} md={6} lg={4}>
+          <Controller
+            name="phone"
+            control={control}
+            render={({
+              field: { onChange, value },
+              fieldState: { error, invalid },
+            }) => (
+              <MUIPhoneNumberInput
+                value={value!}
+                handleChange={(_, info) => {
+                  onChange(info.numberValue);
+                }}
+                fullWidth
+                labelKey={i18next.t("phone")}
+                placeholder={i18next.t("phone")}
+                isRequired
+                error={invalid}
+                helperText={translateValidationErrors(error?.message)}
+              />
+            )}
+          />
+        </Grid>
         {/* Type */}
         <Grid item xs={12} md={6} lg={4}>
           <Controller
@@ -156,7 +170,7 @@ const UserFormForAdd = () => {
                       placeholder={i18next.t("type")}
                       isRequired
                       error={invalid}
-                      helperText={error?.message}
+                      helperText={translateValidationErrors(error?.message)}
                     />
                   )}
                 />
@@ -164,34 +178,30 @@ const UserFormForAdd = () => {
             }}
           />
         </Grid>
-
-        {/* Phone */}
+        {/* Avatar */}
         <Grid item xs={12} md={6} lg={4}>
           <Controller
-            name="phone"
+            name="avatar"
             control={control}
-            render={({
-              field: { onChange, value },
-              fieldState: { error, invalid },
-            }) => (
-              <MUIPhoneNumberInput
-                value={value!}
-                handleChange={(_, info) => {
-                  onChange(info.numberValue);
-                }}
-                fullWidth
-                labelKey={i18next.t("phone")}
-                placeholder={i18next.t("phone")}
-                isRequired
-                error={invalid}
-                helperText={error?.message}
-              />
-            )}
+            render={({ field, fieldState }) => {
+              return (
+                <MUIUploadImgInput
+                  {...uploadImgProps}
+                  handleFieldChange={field.onChange}
+                  labelKey={i18next.t("avatar")}
+                  fullWidth
+                  isRequired
+                  error={Boolean(fieldState.error)}
+                  helperText={translateValidationErrors(
+                    fieldState.error?.message,
+                  )}
+                />
+              );
+            }}
           />
         </Grid>
-
         {/* Switches */}
-        <Grid item xs={12} md={6} lg={4} className="flex flex-row gap-2">
+        <Grid item xs={12} className="flex flex-row gap-2">
           <Controller
             name="status"
             control={control}
@@ -241,7 +251,7 @@ const UserFormForAdd = () => {
           isLoading={isPending}
           fullWidth={false}
           sx={{ minWidth: 130 }}
-          // disabled={!isValid}
+          // disabled={!isValid || isSubmitting}
         />
       </Box>
     </Box>
