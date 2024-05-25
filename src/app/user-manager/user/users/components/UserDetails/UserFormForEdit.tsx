@@ -60,28 +60,6 @@ const UserFormForEdit = ({ formState }: UserFormForEditProps) => {
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate p={3}>
       <Grid container columnSpacing={3} rowSpacing={2}>
-        {/* Avatar */}
-        <Grid item xs={12} md={6} lg={4}>
-          <Controller
-            name="avatar"
-            control={control}
-            render={({ field, fieldState }) => {
-              return (
-                <MUIUploadImgInput
-                  {...uploadImgProps}
-                  handleFieldChange={field.onChange}
-                  labelKey={i18next.t("Avatar")}
-                  fullWidth
-                  isRequired
-                  error={Boolean(fieldState.error)}
-                  helperText={translateValidationErrors(
-                    fieldState.error?.message,
-                  )}
-                />
-              );
-            }}
-          />
-        </Grid>
         {/* Email */}
         <Grid item xs={12} md={6} lg={4}>
           <FormInput
@@ -170,8 +148,30 @@ const UserFormForEdit = ({ formState }: UserFormForEditProps) => {
             )}
           />
         </Grid>
+        {/* Avatar */}
+        <Grid item xs={12} md={6} lg={4}>
+          <Controller
+            name="avatar"
+            control={control}
+            render={({ field, fieldState }) => {
+              return (
+                <MUIUploadImgInput
+                  {...uploadImgProps}
+                  handleFieldChange={field.onChange}
+                  labelKey={i18next.t("Avatar")}
+                  fullWidth
+                  isRequired
+                  error={Boolean(fieldState.error)}
+                  helperText={translateValidationErrors(
+                    fieldState.error?.message,
+                  )}
+                />
+              );
+            }}
+          />
+        </Grid>
         {/* Switches */}
-        <Grid item xs={12} md={6} lg={4} className="flex flex-row gap-2">
+        <Grid item xs={12} className="flex flex-row gap-2">
           <Controller
             name="status"
             control={control}

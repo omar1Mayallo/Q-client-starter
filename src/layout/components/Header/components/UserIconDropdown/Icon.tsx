@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import ErrorTooltip from "../../../../../shared/components/Tooltips/ErrorTooltip";
 import LoadingTooltip from "../../../../../shared/components/Tooltips/LoadingTooltip";
 import { UserModel } from "../../../../../shared/types/models/User.model";
+import { Buffer } from "buffer";
 
 export interface UserIconI {
   userData?: UserModel;
@@ -37,13 +38,10 @@ const UserIcon = ({ userData, isLoading, isError, handleClick }: UserIconI) => {
     return (
       <Tooltip title={t("ACCOUNT_SETTINGS")}>
         <IconButton onClick={handleClick} size="small">
-          {/* !NOTE "any type" Just until Implementing user uploading image feature */}
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {(userData as any).image ? (
+          {userData.avatar ? (
             <Avatar
               alt="User Avatar"
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              src={(userData as any)?.image}
+              src={`data:image/png;base64,${Buffer.from(userData.avatar).toString("base64")}`}
               sx={{ width: 32, height: 32 }}
             />
           ) : (

@@ -28,9 +28,7 @@ const editUserSchema = z.object({
     required_error: "USER_TYPE_REQUIRED",
   }),
   login_with_otp: z.boolean().optional().default(false),
-  avatar: z.instanceof(File, {
-    message: "AVATAR_REQUIRED",
-  }),
+  avatar: z.any(),
 });
 
 // EDIT USER SCHEMA OBJECT TYPE
