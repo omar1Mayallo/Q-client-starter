@@ -11,5 +11,10 @@
   "USER_TYPE_REQUIRED": "User type is required",
   "AVATAR_REQUIRED": "Avatar is required",
   "PASSWORDS_NOT_MATCHES": "Passwords do not match",
-  "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password"
+  "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password",
+  "NAME_TOO_SHORT": "Name is too short",
+  "NAME_TOO_LONG": "Name is too long",
+  "DESCRIPTION_TOO_LONG": "Description is too long",
+  "ROLE_TYPE_REQUIRED": "Role type is required",
+  "GROUP_TYPE_REQUIRED": "Group type is required"
 }

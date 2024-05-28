@@ -8,6 +8,7 @@ import FormSkeleton from "../../../../../../shared/components/Loaders/FormSkelet
 import { userDetailsBreadcrumbs } from "../../data";
 import useGetUser from "../../services/getOne";
 import UserFormForEdit from "./UserFormForEdit";
+import withPageGuard from "../../../../../../shared/components/Routes/withPageGuard";
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -40,4 +41,5 @@ const UserDetails = () => {
   );
 };
 
-export default UserDetails;
+const GuardedUserDetails = withPageGuard(UserDetails, "users", "update");
+export default GuardedUserDetails;

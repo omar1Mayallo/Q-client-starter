@@ -8,6 +8,7 @@ import {
 import { GetAllResponseI } from "../../../../../api/types/response.types";
 import { toastSuccess } from "../../../../../shared/components/Toasts";
 import { UserModel } from "../../../../../shared/types/models/User.model";
+import { AssignUserPermissionsFormData } from "../validations/assignUserPermissions.validations";
 
 export interface GetAllUsersParams {
   page?: number;
@@ -52,12 +53,22 @@ const useUsersAPIs = () => {
     if (res.status === 200) toastSuccess(i18next.t("SAVED_SUCCESS"));
   }
 
+  // ASSIGN User Permissions
+  async function assignUserPermissions(
+    id: number,
+    data: AssignUserPermissionsFormData,
+  ) {
+    const res = await postData(`/users/${id}/permissions`, data);
+    if (res.status === 201) toastSuccess(i18next.t("SAVED_SUCCESS"));
+  }
+
   return {
     getAllUsers,
     deleteUser,
     getUser,
     editUser,
     addUser,
+    assignUserPermissions,
   };
 };
 

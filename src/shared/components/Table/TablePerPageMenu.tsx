@@ -1,10 +1,13 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
 import i18next from "i18next";
 
-const TablePerPageMenu = () => {
-  const { pagination, handleChangeLimit } = useGetAllUsersParamsStore();
-
+const TablePerPageMenu = ({
+  limit,
+  handleChangeLimit,
+}: {
+  limit: number;
+  handleChangeLimit: (limit: number) => void;
+}) => {
   return (
     <FormControl size="small" sx={{ minWidth: 90 }}>
       <InputLabel id="demo-simple-select-helper-label">
@@ -14,7 +17,7 @@ const TablePerPageMenu = () => {
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
         label={i18next.t("PerPage")}
-        value={pagination.limit}
+        value={limit}
         onChange={(e) => {
           handleChangeLimit(+e.target.value);
         }}

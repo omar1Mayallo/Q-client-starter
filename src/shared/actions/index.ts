@@ -1,4 +1,10 @@
-import { Delete, Edit, Key } from "@mui/icons-material";
+import {
+  AssignmentInd,
+  Delete,
+  Edit,
+  GroupAdd,
+  LockPerson,
+} from "@mui/icons-material";
 import { SvgIcon } from "@mui/material";
 
 export interface IActionsConfig {
@@ -16,8 +22,16 @@ const ActionsConfig: Record<string, IActionsConfig> = {
     Icon: Delete,
   },
   permissions: {
-    actionName: "Permissions",
-    Icon: Key,
+    actionName: "user_permissions",
+    Icon: LockPerson,
+  },
+  "assign-role": {
+    actionName: "assign_role",
+    Icon: AssignmentInd,
+  },
+  "add-users": {
+    actionName: "add_user",
+    Icon: GroupAdd,
   },
 };
 

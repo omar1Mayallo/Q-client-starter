@@ -1,18 +1,16 @@
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import {
-  useLangStyle,
-  useScreenSizeStyle,
-} from "../../../../../../../shared/hooks/useStyle";
-import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
+import { useLangStyle, useScreenSizeStyle } from "../../hooks/useStyle";
 
 export default function TablePagination({
   numOfPages,
+  page,
+  handlePagination,
 }: {
   numOfPages: number;
+  page: number;
+  handlePagination: (page: number) => void;
 }) {
-  const { pagination, handlePagination } = useGetAllUsersParamsStore();
-
   return (
     <Pagination
       sx={{
@@ -20,7 +18,7 @@ export default function TablePagination({
           flexDirection: useLangStyle("row-reverse", "row"),
         },
       }}
-      page={pagination.page}
+      page={page}
       count={numOfPages}
       variant="outlined"
       color="primary"

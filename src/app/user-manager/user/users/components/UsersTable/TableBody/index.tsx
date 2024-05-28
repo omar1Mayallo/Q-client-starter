@@ -10,11 +10,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ConfirmDialog from "../../../../../../../shared/components/Dialogs/ConfirmDialog";
 import TableRowActions from "../../../../../../../shared/components/Table/TableRowActions";
 import { UserModel } from "../../../../../../../shared/types/models/User.model";
-import useFactoryActions from "../../../hooks/useFactoryActions";
 import useDeleteUsers from "../../../services/delete";
 import { getStatusColor } from "../../../../../../../shared/helpers/factory";
 import { formatToRegularString } from "../../../../../../../shared/helpers/formats";
 import { isEmpty } from "../../../../../../../shared/helpers/checks";
+import useFactoryActions from "../../../../../../../shared/hooks/useFactoryActions";
 
 interface TableBodyProps {
   data: UserModel[];
@@ -52,9 +52,14 @@ const TableBody: React.FC<TableBodyProps> = ({
       setSelectedRowId(id);
       setIsModalOpen(true);
     },
+    permissions: (id: number) =>
+      navigate(`${location.pathname}/${id}/permissions`),
+    "assign-role": (id: number) => console.log(id),
   };
-  const { actionsItems, isHaveNotDeleteAction } =
-    useFactoryActions(userActionHandlers);
+  const { actionsItems, isHaveNotDeleteAction } = useFactoryActions(
+    userActionHandlers,
+    "users",
+  );
 
   return (
     <>

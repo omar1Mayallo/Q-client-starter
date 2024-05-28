@@ -11,5 +11,10 @@
   "USER_TYPE_REQUIRED": "نوع المستخدم مطلوب",
   "AVATAR_REQUIRED": "الصورة مطلوبة",
   "PASSWORDS_NOT_MATCHES": "كلمات المرور غير متطابقة",
-  "CONFIRM_PASSWORD_REQUIRED": "كلمة المرور مطلوبة"
+  "CONFIRM_PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
+  "NAME_TOO_SHORT": "الاسم قصير جدًا",
+  "NAME_TOO_LONG": "الاسم طويل جدًا",
+  "DESCRIPTION_TOO_LONG": "الوصف طويل جدًا",
+  "ROLE_TYPE_REQUIRED": "نوع الدور مطلوب",
+  "GROUP_TYPE_REQUIRED": "نوع المجموعة مطلوب"
 }

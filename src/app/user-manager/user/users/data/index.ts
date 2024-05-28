@@ -33,6 +33,19 @@ export const addUserBreadcrumbs = (
   { name: t("ADD_USER") },
 ];
 
+export const userPermissionsBreadcrumbs = (
+  t: TFunction<["translation", ...string[]], undefined>,
+  id: string,
+): IBreadcrumbs[] => [
+  { name: t("USERS_MANAGEMENT") },
+  {
+    name: t("USERS"),
+    url: "/users-management/users",
+  },
+  { name: `${t("id")}(${id})` },
+  { name: t("USER_PERMISSIONS") },
+];
+
 // _TABLE_HEAD_COLUMNS_CELLS
 export const usersHeadCells = (
   t: TFunction<["translation", ...string[]], undefined>,

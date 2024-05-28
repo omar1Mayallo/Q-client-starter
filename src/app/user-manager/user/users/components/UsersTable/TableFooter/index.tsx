@@ -1,8 +1,9 @@
 import { Stack, TextField, Toolbar } from "@mui/material";
 import { useScreenSizeStyle } from "../../../../../../../shared/hooks/useStyle";
-import TablePagination from "./TablePagination";
-import TablePerPageMenu from "./TablePerPageMenu";
 import i18next from "i18next";
+import useGetAllUsersParamsStore from "../../../store/useGetAllUsersParams.store";
+import TablePerPageMenu from "../../../../../../../shared/components/Table/TablePerPageMenu";
+import TablePagination from "../../../../../../../shared/components/Table/TablePagination";
 
 const TableFooter = ({
   totalNumOfItems,
@@ -11,6 +12,9 @@ const TableFooter = ({
   totalNumOfItems: number;
   numOfPages: number;
 }) => {
+  const { pagination, handlePagination, handleChangeLimit } =
+    useGetAllUsersParamsStore();
+
   return (
     <Toolbar
       sx={{
@@ -40,9 +44,16 @@ const TableFooter = ({
             maxWidth: 90,
           }}
         />
-        <TablePerPageMenu />
+        <TablePerPageMenu
+          limit={pagination.limit}
+          handleChangeLimit={handleChangeLimit}
+        />
       </Stack>
-      <TablePagination numOfPages={numOfPages} />
+      <TablePagination
+        numOfPages={numOfPages}
+        page={pagination.page}
+        handlePagination={handlePagination}
+      />
     </Toolbar>
   );
 };

@@ -8,6 +8,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import i18next from "i18next";
 
 type ConfirmDialogProps = {
   isOpen: boolean;
@@ -34,8 +35,8 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   loading,
   head,
   contentText,
-  btnText = "Confirm",
-  btnColor = "secondary",
+  btnText = i18next.t("CONFIRM"),
+  btnColor = "primary",
 }) => {
   return (
     <Dialog
@@ -54,10 +55,10 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         <Button
           disabled={loading}
           onClick={onClose}
-          color="primary"
+          color="error"
           variant="contained"
         >
-          Cancel
+          {i18next.t("BACK")}
         </Button>
         <Button
           onClick={onConfirm}

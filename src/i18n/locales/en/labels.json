@@ -15,6 +15,7 @@
   "type": "Type",
   "created_at": "Created At",
   "actions": "Actions",
+  "description": "Description",
 
   "LOGIN_SUCCESS": "Login successful",
   "LOGOUT_SUCCESS": "Logout successful",
@@ -28,6 +29,7 @@
 
   "BACK": "Back",
   "SAVE": "Save",
+  "CONFIRM": "Confirm",
 
   "USERS": "Users",
   "USERS_MANAGEMENT": "Users Management",
@@ -45,10 +47,24 @@
   "delete": "Delete",
   "reset": "Reset",
   "deleteSelected": "Delete Selected",
+  "user_permissions": "Permissions",
+  "assign_role": "Assign Roles",
+  "add_user": "Add Users",
 
   "selectedItems": "{{number}} item(s) selected",
 
   "loginWithOTP": "Login With OTP",
   "PerPage": "Per Page",
-  "Total": "Total"
+  "Total": "Total",
+
+  "Add_ROLE": "Add New Role",
+  "Edit_ROLE": "Edit Role",
+  "Add_GROUP": "Add New Group",
+  "Edit_GROUP": "Edit Group",
+  "GROUPS": "Groups",
+  "ROLES": "Roles",
+  "USER_PERMISSIONS": "User Permissions",
+
+  "SELECT_ALL": "Select All",
+  "VIEW_ONLY": "View Only"
 }

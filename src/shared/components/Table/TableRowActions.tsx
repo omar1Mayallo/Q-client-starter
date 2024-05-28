@@ -4,6 +4,7 @@ import IconButtonTooltip from "../Buttons/IconButtonTooltip";
 import useDropDownMenu from "../../hooks/useDropDownMenu";
 import { IActionsConfig } from "../../actions";
 import i18next from "i18next";
+import { useLangStyle } from "../../hooks/useStyle";
 
 export interface ActionItems extends IActionsConfig {
   handler: (id: number) => void;
@@ -21,6 +22,8 @@ const TableRowActions = ({
   selected,
 }: TableRowActionsProps) => {
   const { anchorEl, open, handleClick, handleClose } = useDropDownMenu();
+
+  const langTxtStyle = useLangStyle("rtl", "ltr");
 
   return (
     <>
@@ -46,6 +49,7 @@ const TableRowActions = ({
               key={index}
               divider={index !== actionsItems.length - 1}
               sx={{ py: 1.1 }}
+              dir={langTxtStyle}
               onClick={() => {
                 handler(id);
                 // handleClose();
@@ -55,7 +59,7 @@ const TableRowActions = ({
               <ListItemIcon>
                 <Icon fontSize="medium" />
               </ListItemIcon>
-              <ListItemText>
+              <ListItemText sx={{ textAlign: "start" }}>
                 {i18next.t(actionName, { ns: "labels" })}
               </ListItemText>
             </MenuItem>

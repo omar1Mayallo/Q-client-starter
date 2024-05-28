@@ -15,6 +15,7 @@
   "type": "النوع",
   "created_at": "تاريخ الإنشاء",
   "actions": "الإجراءات",
+  "description": "الوصف",
 
   "LOGIN_SUCCESS": "تم تسجيل الدخول بنجاح",
   "LOGOUT_SUCCESS": "تم تسجيل الخروج بنجاح",
@@ -28,6 +29,7 @@
 
   "BACK": "رجوع",
   "SAVE": "حفظ",
+  "CONFIRM": "تاكيد",
 
   "USERS": "المستخدمين",
   "USERS_MANAGEMENT": "إدارة المستخدمين",
@@ -45,10 +47,25 @@
   "delete": "حذف",
   "reset": "إعادة تعيين",
   "deleteSelected": "حذف المحدد",
+  "user_permissions": "الاذونات",
+  "assign_role": "تعيين الادوار",
+  "add_user": "اضافة مستخدمين",
 
   "selectedItems": "{{number}} عناصر محددة",
 
   "loginWithOTP": "تسجيل الدخول برمز مرة واحدة",
   "PerPage": "لكل صفحة",
-  "Total": "العدد الكلي"
+  "Total": "العدد الكلي",
+
+  "Add_ROLE": "اضافة دور جديد",
+  "Edit_ROLE": "تعديل دور",
+  "Add_GROUP": "اضافة مجموعة جديدة",
+  "Edit_GROUP": "تعديل مجموعة",
+
+  "ROLES": "الادوار",
+  "GROUPS": "المجموعات",
+  "USER_PERMISSIONS": "أذونات المستخدم",
+
+  "SELECT_ALL": "اختيار الكل",
+  "VIEW_ONLY": "عرض فقط"
 }

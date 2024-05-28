@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes } from "react-router-dom";
+import UnAuthorized from "./403";
 import NotFound from "./404";
 import Login from "./app/authentication/pages/login";
 import useLoginAPIs from "./app/authentication/pages/login/api/login.api";
 import Register from "./app/authentication/pages/register";
-import UnAuthorized from "./403";
 import Customers from "./app/customers-management/customers";
 import Subscriptions from "./app/customers-management/subscriptions";
-import Dashboard from "./app/dashboard";
+import GuardedDashboard from "./app/dashboard";
 import Dues from "./app/financial-services/billing-manager/dues";
 import Invoices from "./app/financial-services/billing-manager/invoices";
 import Payments from "./app/financial-services/billing-manager/payments";
@@ -18,14 +18,15 @@ import Groups from "./app/user-manager/group";
 import useGetUserPermissions, {
   useGetUserActions,
 } from "./app/user-manager/permissions/services/permissions.service";
-import Roles from "./app/user-manager/role";
-import Users from "./app/user-manager/user/users";
-import AddUser from "./app/user-manager/user/users/components/AddUser";
-import UserDetails from "./app/user-manager/user/users/components/UserDetails";
+import GuardedRoles from "./app/user-manager/role";
+import GuardedUsers from "./app/user-manager/user/users";
+import GuardedAddUser from "./app/user-manager/user/users/components/AddUser";
+import GuardedUserDetails from "./app/user-manager/user/users/components/UserDetails";
 import FullAppLoading from "./shared/components/Loaders/FullAppLoading";
 import ProtectedRoutes from "./shared/components/Routes/ProtectedRoutes";
 import PublicRoutes from "./shared/components/Routes/PublicRoutes";
 import { toastError } from "./shared/components/Toasts";
+import UserPermissions from "./app/user-manager/user/users/components/UserPermissions";
 
 function App() {
   const {
@@ -58,17 +59,20 @@ function App() {
             <Route path="register" element={<Register />} />
           </Route>
           <Route element={<ProtectedRoutes inLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<GuardedDashboard />} />
             <Route path="/settings" element={<Settings />} />
 
             <Route path="/users-management">
               <Route index element={<Navigate to={"/login"} />} />
               <Route path="users">
-                <Route index element={<Users />} />
-                <Route path="add" element={<AddUser />} />
-                <Route path=":id" element={<UserDetails />} />
+                <Route index element={<GuardedUsers />} />
+                <Route path="add" element={<GuardedAddUser />} />
+                <Route path=":id">
+                  <Route index element={<GuardedUserDetails />} />
+                  <Route path="permissions" element={<UserPermissions />} />
+                </Route>
               </Route>
-              <Route path="roles" element={<Roles />} />
+              <Route path="roles" element={<GuardedRoles />} />
               <Route path="groups" element={<Groups />} />
             </Route>
 
