@@ -10,6 +10,7 @@ import { toastSuccess } from "../../../../shared/components/Toasts";
 import { RoleModel } from "../../../../shared/types/models/Role.model";
 import { EditRoleFormData } from "../validation/editRole.validation";
 import { AddRoleFormData } from "../validation/addRole.validation";
+import { AssignRolePermissionsFormData } from "../validation/assignRolePermissions.validations";
 
 export interface GetAllRolesParams {
   page?: number;
@@ -51,12 +52,22 @@ const useRolesAPIs = () => {
     if (res.status === 201) toastSuccess(i18next.t("SAVED_SUCCESS"));
   }
 
+  // ASSIGN Role Permissions
+  async function assignRolePermissions(
+    id: number,
+    data: AssignRolePermissionsFormData,
+  ) {
+    const res = await postData(`/roles/${id}/permissions`, data);
+    if (res.status === 201) toastSuccess(i18next.t("SAVED_SUCCESS"));
+  }
+
   return {
     getAllRoles,
     deleteRole,
     getRole,
     editRole,
     addRole,
+    assignRolePermissions,
   };
 };
 

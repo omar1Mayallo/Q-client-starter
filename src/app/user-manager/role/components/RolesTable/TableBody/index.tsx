@@ -16,6 +16,8 @@ import { RoleModel } from "../../../../../../shared/types/models/Role.model";
 import useDeleteRoles from "../../../services/delete";
 import EditRole from "../../EditRole";
 import useFactoryActions from "../../../../../../shared/hooks/useFactoryActions";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useGetRoleActionsById } from "../../../../permissions/services/permissions.service";
 
 interface TableBodyProps {
   data: RoleModel[];
@@ -30,6 +32,9 @@ const TableBody: React.FC<TableBodyProps> = ({
   handleClick,
   selected,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { mutate, isPending } = useDeleteRoles();
   const [selectedRowId, setSelectedRowId] = useState<number>();
   const [formState, setFormState] = useState<RoleModel>();
@@ -61,11 +66,16 @@ const TableBody: React.FC<TableBodyProps> = ({
       setSelectedRowId(id);
       setIsConfirmDeleteModalOpen(true);
     },
+    permissions: (id: number) =>
+      navigate(`${location.pathname}/${id}/permissions`),
   };
+
   const { actionsItems, isHaveNotDeleteAction } = useFactoryActions(
     userActionHandlers,
     "roles",
   );
+
+  const { data: roleActions } = useGetRoleActionsById(+selectedRowId!);
 
   return (
     <>
@@ -90,6 +100,7 @@ const TableBody: React.FC<TableBodyProps> = ({
           }}
           selectedRowId={selectedRowId}
           formState={formState!}
+          disableType={!!roleActions?.length}
         />
       )}
 

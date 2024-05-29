@@ -23,6 +23,18 @@ export const roleDetailsBreadcrumbs = (
   },
   { name: `${t("id")}(${id})` },
 ];
+export const rolePermissionsBreadcrumbs = (
+  t: TFunction<["translation", ...string[]], undefined>,
+  id: string,
+): IBreadcrumbs[] => [
+  { name: t("USERS_MANAGEMENT") },
+  {
+    name: t("ROLES"),
+    url: "/users-management/roles",
+  },
+  { name: `${t("id")}(${id})` },
+  { name: t("ROLE_PERMISSIONS") },
+];
 
 // _TABLE_HEAD_COLUMNS_CELLS
 export const rolesHeadCells = (

@@ -1,4 +1,5 @@
 import { Stack, Typography } from "@mui/material";
+import i18next from "i18next";
 import { ReactNode } from "react";
 import { Helmet } from "react-helmet";
 
@@ -10,7 +11,7 @@ export interface PageHeadProps {
 const PageHead = ({ title, children }: PageHeadProps) => {
   return (
     <>
-      <Helmet title={`Template | ${title}`} />
+      <Helmet title={`${i18next.t("COMPANY_NAME")} | ${title}`} />
 
       <Stack
         direction={{ sm: "column", md: "row" }}

@@ -6,6 +6,7 @@ import { USER_TYPE } from "../../../../shared/types/models/User.model";
 import useUserStore from "../../../../store/user.store";
 import usePermissionsAPIs from "../api/permission.api";
 import { PermissionsTreeI } from "../types";
+import { ROLE_TYPE } from "../../../../shared/types/models/Role.model";
 
 export default function useGetUserPermissions() {
   const { getLoggedUserPermissions } = usePermissionsAPIs();
@@ -34,7 +35,8 @@ export function useGetUserActions() {
   });
 }
 
-export function useGetSystemPermissions(origin: USER_TYPE) {
+// !NOTE: USER_TYPE | ROLE_TYPE >> Need To make A Unify Type Like APP_TYPE
+export function useGetSystemPermissions(origin: USER_TYPE | ROLE_TYPE) {
   const { getSystemPermissions } = usePermissionsAPIs();
   return useQuery<PermissionsTreeI, AxiosError<ResponseErrorsI>>({
     queryKey: [CACHED_KEYS.SYSTEM_PERMISSIONS, origin],
@@ -51,5 +53,13 @@ export function useGetUserActionsById(id: number) {
     queryFn: () => getUserActionById(id),
     staleTime: Infinity, // Consider as Fresh Forever
     refetchInterval: 86400000, // Refetch every 5 seconds
+  });
+}
+
+export function useGetRoleActionsById(id: number) {
+  const { getRoleActionById } = usePermissionsAPIs();
+  return useQuery<string[], AxiosError<ResponseErrorsI>>({
+    queryKey: [CACHED_KEYS.ROLE_ACTIONS, id],
+    queryFn: () => getRoleActionById(id),
   });
 }

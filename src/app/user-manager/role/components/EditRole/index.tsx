@@ -30,6 +30,7 @@ interface EditRoleProps {
   onClose: () => void;
   selectedRowId: number;
   formState: RoleModel;
+  disableType: boolean;
 }
 
 const EditRole = ({
@@ -37,6 +38,7 @@ const EditRole = ({
   open,
   selectedRowId,
   formState,
+  disableType,
 }: EditRoleProps) => {
   const {
     register,
@@ -112,6 +114,7 @@ const EditRole = ({
                 }) => {
                   return (
                     <Autocomplete
+                      disabled={disableType}
                       onChange={(_, selectedValue) => onChange(selectedValue)}
                       value={value || null}
                       options={Object.values(ROLE_TYPE)}

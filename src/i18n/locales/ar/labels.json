@@ -65,7 +65,10 @@
   "ROLES": "الادوار",
   "GROUPS": "المجموعات",
   "USER_PERMISSIONS": "أذونات المستخدم",
+  "ROLE_PERMISSIONS": "أذونات الدور",
 
   "SELECT_ALL": "اختيار الكل",
-  "VIEW_ONLY": "عرض فقط"
+  "VIEW_ONLY": "عرض فقط",
+
+  "COMPANY_NAME": "اتقان"
 }

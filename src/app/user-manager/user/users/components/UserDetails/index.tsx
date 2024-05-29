@@ -9,11 +9,18 @@ import { userDetailsBreadcrumbs } from "../../data";
 import useGetUser from "../../services/getOne";
 import UserFormForEdit from "./UserFormForEdit";
 import withPageGuard from "../../../../../../shared/components/Routes/withPageGuard";
+import { useGetUserActionsById } from "../../../../permissions/services/permissions.service";
 
 const UserDetails = () => {
   const { id } = useParams();
 
-  const { data, isLoading, isError, isSuccess, error } = useGetUser(+id!);
+  const { data: userActions, ...restUserActions } = useGetUserActionsById(+id!);
+  const { data: userData, ...restUserData } = useGetUser(+id!);
+
+  const isLoading = restUserData.isLoading || restUserActions.isLoading;
+  const isError = restUserData.isError || restUserActions.isError;
+  const isSuccess = restUserData.isSuccess || restUserActions.isSuccess;
+  const error = restUserData.error || restUserActions.error;
 
   return (
     <>
@@ -29,11 +36,16 @@ const UserDetails = () => {
             <FormSkeleton numOfInputs={6} />
           ) : isError ? (
             <Alert severity="error" variant="outlined">
-              {error.response?.data.message ||
+              {error?.response?.data.message ||
                 i18next.t("SOMETHING_WENT_WRONG")}
             </Alert>
           ) : (
-            isSuccess && <UserFormForEdit formState={data} />
+            isSuccess && (
+              <UserFormForEdit
+                formState={userData!}
+                disableType={!!userActions?.length}
+              />
+            )
           )}
         </Paper>
       </Box>

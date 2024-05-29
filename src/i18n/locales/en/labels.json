@@ -64,7 +64,10 @@
   "GROUPS": "Groups",
   "ROLES": "Roles",
   "USER_PERMISSIONS": "User Permissions",
+  "ROLE_PERMISSIONS": "Role Permissions",
 
   "SELECT_ALL": "Select All",
-  "VIEW_ONLY": "View Only"
+  "VIEW_ONLY": "View Only",
+
+  "COMPANY_NAME": "ITQAN"
 }

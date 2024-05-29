@@ -13,20 +13,20 @@ import LoadingButton from "../../../../../shared/components/Buttons/LoadingButto
 import { LanguagesE } from "../../../../../store/language.store";
 import { PermissionsTreeI } from "../../types";
 import usePermissionTreeHandlers from "./usePermissionTreeHandlers";
-import useAssignUserPermissions from "../../../user/users/services/assignUserPermissions";
-import { useParams } from "react-router-dom";
-import useAssignUserPermissionsForm, {
-  AssignUserPermissionsFormData,
-} from "../../../user/users/validations/assignUserPermissions.validations";
 
-const PermissionsTree = ({
-  systemPermissions,
-  userActions = [],
-}: {
+interface PermissionsTreeProps {
   systemPermissions: PermissionsTreeI;
-  userActions?: string[];
+  actions?: string[];
+  handleSubmit: (checkedItems: string[]) => void;
+  isPending: boolean;
+}
+
+const PermissionsTree: React.FC<PermissionsTreeProps> = ({
+  systemPermissions,
+  actions = [],
+  handleSubmit,
+  isPending,
 }) => {
-  const { id } = useParams();
   const {
     checkedItems,
     handleActionChange,
@@ -38,18 +38,9 @@ const PermissionsTree = ({
     isEntityChecked,
     isModuleChecked,
     isViewOnlyChecked,
-  } = usePermissionTreeHandlers(systemPermissions, userActions);
+  } = usePermissionTreeHandlers(systemPermissions, actions);
 
-  const { handleSubmit, setError } = useAssignUserPermissionsForm();
-
-  const { mutate, isPending } = useAssignUserPermissions(+id!, setError);
-
-  const onSubmit = () => {
-    const data: AssignUserPermissionsFormData = {
-      actions: checkedItems,
-    };
-    mutate(data);
-  };
+  const onSubmit = () => handleSubmit(checkedItems);
 
   return (
     <Stack gap={3}>
@@ -165,8 +156,9 @@ const PermissionsTree = ({
         <LoadingButton
           label={i18next.t("SAVE")}
           isLoading={isPending}
+          disabled={isPending}
           fullWidth={false}
-          onClick={handleSubmit(onSubmit)}
+          onClick={onSubmit}
         />
       </Box>
     </Stack>

@@ -27,6 +27,7 @@ import ProtectedRoutes from "./shared/components/Routes/ProtectedRoutes";
 import PublicRoutes from "./shared/components/Routes/PublicRoutes";
 import { toastError } from "./shared/components/Toasts";
 import UserPermissions from "./app/user-manager/user/users/components/UserPermissions";
+import RolePermissions from "./app/user-manager/role/components/RolePermissions";
 
 function App() {
   const {
@@ -72,7 +73,13 @@ function App() {
                   <Route path="permissions" element={<UserPermissions />} />
                 </Route>
               </Route>
-              <Route path="roles" element={<GuardedRoles />} />
+              <Route path="roles">
+                <Route index element={<GuardedRoles />} />
+                <Route path=":id">
+                  <Route path="permissions" element={<RolePermissions />} />
+                </Route>
+              </Route>
+
               <Route path="groups" element={<Groups />} />
             </Route>
 

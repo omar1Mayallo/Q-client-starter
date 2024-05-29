@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getData } from "../../../../api/methods";
+import { ROLE_TYPE } from "../../../../shared/types/models/Role.model";
 import { USER_TYPE } from "../../../../shared/types/models/User.model";
 import useUserStore from "../../../../store/user.store";
 import { PermissionsTreeI } from "../types";
@@ -25,7 +26,7 @@ const usePermissionsAPIs = () => {
   }
 
   // GET System Permissions
-  async function getSystemPermissions(origin: USER_TYPE) {
+  async function getSystemPermissions(origin: USER_TYPE | ROLE_TYPE) {
     const res = await getData<PermissionsTreeI>(
       `/permissions/system?origin=${origin}`,
     );
@@ -34,7 +35,13 @@ const usePermissionsAPIs = () => {
 
   // GET User Action By ID
   async function getUserActionById(id: number) {
-    const res = await getData<string[]>(`/permissions/actions/${id}`);
+    const res = await getData<string[]>(`/permissions/users/actions/${id}`);
+    return res.data;
+  }
+
+  // GET Role Action By ID
+  async function getRoleActionById(id: number) {
+    const res = await getData<string[]>(`/permissions/roles/actions/${id}`);
     return res.data;
   }
 
@@ -43,6 +50,7 @@ const usePermissionsAPIs = () => {
     getLoggedUserActions,
     getSystemPermissions,
     getUserActionById,
+    getRoleActionById,
   };
 };
 

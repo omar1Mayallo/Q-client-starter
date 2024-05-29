@@ -27,9 +27,10 @@ import { translateValidationErrors } from "../../../../../../shared/helpers/fact
 
 interface UserFormForEditProps {
   formState: UserModel;
+  disableType: boolean;
 }
 
-const UserFormForEdit = ({ formState }: UserFormForEditProps) => {
+const UserFormForEdit = ({ formState, disableType }: UserFormForEditProps) => {
   const { id } = useParams();
   const { avatar, ...restState } = formState;
   // FORM_VALIDATION
@@ -105,6 +106,7 @@ const UserFormForEdit = ({ formState }: UserFormForEditProps) => {
             }) => {
               return (
                 <Autocomplete
+                  disabled={disableType}
                   onChange={(_, selectedValue) => onChange(selectedValue)}
                   value={value || null}
                   options={Object.values(USER_TYPE)}
