@@ -134,7 +134,7 @@ const TableBody: React.FC<TableBodyProps> = ({
                   label={formatToRegularString(row.status)}
                   color={getStatusColor(row.status)}
                   size="small"
-                  variant="outlined"
+                  variant="filled"
                 />
               </TableCell>
               <TableCell align="center">

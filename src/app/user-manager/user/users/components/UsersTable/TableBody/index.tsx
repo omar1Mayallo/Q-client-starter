@@ -15,6 +15,7 @@ import { getStatusColor } from "../../../../../../../shared/helpers/factory";
 import { formatToRegularString } from "../../../../../../../shared/helpers/formats";
 import { isEmpty } from "../../../../../../../shared/helpers/checks";
 import useFactoryActions from "../../../../../../../shared/hooks/useFactoryActions";
+import AssignRoleModal from "../../AssignRole";
 
 interface TableBodyProps {
   data: UserModel[];
@@ -34,13 +35,14 @@ const TableBody: React.FC<TableBodyProps> = ({
 
   const { mutate, isPending } = useDeleteUsers();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAssignRoleModalOpen, setIsAssignRoleModalOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState<number>();
   const handleDelete = () => {
     if (selectedRowId) {
       mutate([selectedRowId], {
         onSuccess: () => {
-          setIsModalOpen(false);
+          setIsDeleteModalOpen(false);
         },
       });
     }
@@ -50,11 +52,14 @@ const TableBody: React.FC<TableBodyProps> = ({
     update: (id: number) => navigate(`${location.pathname}/${id}`),
     delete: (id: number) => {
       setSelectedRowId(id);
-      setIsModalOpen(true);
+      setIsDeleteModalOpen(true);
     },
     permissions: (id: number) =>
       navigate(`${location.pathname}/${id}/permissions`),
-    "assign-role": (id: number) => console.log(id),
+    "assign-role": (id: number) => {
+      setSelectedRowId(id);
+      setIsAssignRoleModalOpen(true);
+    },
   };
   const { actionsItems, isHaveNotDeleteAction } = useFactoryActions(
     userActionHandlers,
@@ -65,8 +70,8 @@ const TableBody: React.FC<TableBodyProps> = ({
     <>
       {/* DELETE_CONFIRMATION_DIALOG */}
       <ConfirmDialog
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDelete}
         loading={isPending}
         head="Confirm Deletion"
@@ -74,7 +79,12 @@ const TableBody: React.FC<TableBodyProps> = ({
         undone."
       />
 
-      {/* UPDATE_DIALOG */}
+      {/* ASSIGN_ROLE_MODAL */}
+      <AssignRoleModal
+        open={isAssignRoleModalOpen}
+        onClose={() => setIsAssignRoleModalOpen(false)}
+      />
+
       <MUITableBody>
         {data.map((row) => {
           const isItemSelected = isSelected(row.id);
@@ -112,7 +122,7 @@ const TableBody: React.FC<TableBodyProps> = ({
                   label={formatToRegularString(row.status)}
                   color={getStatusColor(row.status)}
                   size="small"
-                  variant="outlined"
+                  variant="filled"
                 />
               </TableCell>
               <TableCell align="center">
